@@ -1,0 +1,9 @@
+The selector needs to be offseted:
+    x-5, y-10 (see in TitlePage.js)
+
+
+Learn page:
+    use selectionSprite_large for selector.
+
+BST and RB-BST pages:
+    use selectionSprite_longer for selector.

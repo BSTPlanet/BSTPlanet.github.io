@@ -1,0 +1,17 @@
+class ClassName extends Phaser.Scene {
+    constructor() {
+        super({ key:'ClassName' })
+    }
+
+    preload() {
+
+    }
+
+    create() {
+
+    }
+
+    update() {
+        
+    }
+}
