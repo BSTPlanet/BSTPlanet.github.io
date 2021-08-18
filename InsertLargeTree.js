@@ -65,10 +65,10 @@ export class InsertLargeTree extends Phaser.Scene {
 
         spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spacebar.on('down', () => {
-            if (tasks.length == 0 && singleTon.set.size != 14) {
+            if (tasks.length == 0 && singleTon.setRB.size != 14) {
                 // expert.talk() that you haven't found all of the reward nodes yet
                 expert.talk('rewardLocked',0,'nosymbol');
-            } else if (tasks.length == 0 && singleTon.set.size == 14) {
+            } else if (tasks.length == 0 && singleTon.setRB.size == 14) {
                 this.scene.stop('Panel');
                 this.scene.stop('ExpertAlien');
                 this.scene.stop('HelpBubble_keyboard');
