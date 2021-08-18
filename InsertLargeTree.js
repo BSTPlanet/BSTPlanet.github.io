@@ -47,7 +47,7 @@ export class InsertLargeTree extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Insert In A Large Tree');
-        expert.talk('insertLargeTree', 0);
+        expert.talk('insertLargeTree',0,'close');
     }
 
     create() {
@@ -83,7 +83,7 @@ export class InsertLargeTree extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('insertLargeTree',5);
+                        expert.talk('insertLargeTree',5,'close');
                     }
                 // }
             }           
@@ -206,8 +206,8 @@ export class InsertLargeTree extends Phaser.Scene {
         }
 
         function taskSucceededActions() {
+            player.setPosition(tree.root.x,tree.root.y-BUFFER);
             if(tree.checkCorrectnessRBTree(tree.root)) {     // if RB tree is correct
-                player.setPosition(tree.root.x,tree.root.y-BUFFER);
                 panel.greenFeedback();
                 singleTon.updateSetRB(tasks[0]);
                 if (tasks[0] == 210 && !(singleTon.nodeSetRB.has(node_210))) {
@@ -257,7 +257,7 @@ export class InsertLargeTree extends Phaser.Scene {
                         // panel.greenFeedback();
                         taskSucceededActions();
                         if (tasks[0] == data.task[0]){
-                            expert.talk('insertLargeTree',1);
+                            expert.talk('insertLargeTree',1,'nosymbol');
                         }
                     } else {
                     panel.redFeedback();
@@ -320,7 +320,7 @@ export class InsertLargeTree extends Phaser.Scene {
                 node.right.drawLinkToParentRB(this);
 
                 if(tasks[0] == data.task[0]) {
-                    expert.talk('insertLargeTree', 3)
+                    expert.talk('insertLargeTree',3,'nosymbol');
                 }
 
             } else {
@@ -351,7 +351,7 @@ export class InsertLargeTree extends Phaser.Scene {
                 panel.greenFeedback();
                 rotateRight(this, player, node)
                 if (tasks[0] == data.task[0]) {
-                    expert.talk('insertLargeTree', 2)
+                    expert.talk('insertLargeTree',2,'nosymbol')
                 }
             } else {
                 panel.redFeedback();

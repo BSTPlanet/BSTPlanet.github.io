@@ -46,7 +46,7 @@ export class InsertSmaller extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Insert Smaller Node');
-        expert.talk('insertSmaller', 0);
+        expert.talk('insertSmaller',0,'close');
     }
 
     create() {
@@ -79,7 +79,7 @@ export class InsertSmaller extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('insertSmaller',4);
+                        expert.talk('insertSmaller',4,'nosymbol');
                     }
                 // }
             }           
@@ -251,7 +251,7 @@ export class InsertSmaller extends Phaser.Scene {
                         player.setPosition(tree.root.x,tree.root.y-BUFFER);
                         panel.greenFeedback('GOOD JOB!');
                         if (tasks[0] == data.task[0]){
-                            expert.talk('insertSmaller',1)
+                            expert.talk('insertSmaller',1,'nosymbol');
                         }
                     } else {
                         panel.redFeedback('TRY AGAIN');
@@ -355,7 +355,7 @@ export class InsertSmaller extends Phaser.Scene {
                 panel.greenFeedback();
                 rotateRight(this, player, node)
                 if (tasks[0] == data.task[0]) {
-                    expert.talk('insertSmaller', 2)
+                    expert.talk('insertSmaller',2,'nosymbol');
                 }
             } else {
                 panel.redFeedback();

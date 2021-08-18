@@ -47,7 +47,7 @@ export class InsertBetweenNodes extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Insert A Node Between Nodes');
-        expert.talk('insertBetweenNodes', 0);
+        expert.talk('insertBetweenNodes',0,'close');
     }
 
     create() {
@@ -80,7 +80,7 @@ export class InsertBetweenNodes extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('insertBetweenNodes',5);
+                        expert.talk('insertBetweenNodes',5,'nosymbol');
                     }
                 // }
             }           
@@ -252,7 +252,7 @@ export class InsertBetweenNodes extends Phaser.Scene {
                         player.setPosition(tree.root.x,tree.root.y-BUFFER);
                         panel.greenFeedback('GOOD JOB!');
                         if (tasks[0] == data.task[0]){
-                            expert.talk('insertBetweenNodes',1)
+                            expert.talk('insertBetweenNodes',1,'nosymbol');
                         }
                     } else {
                         panel.redFeedback('TRY AGAIN');
@@ -357,7 +357,7 @@ export class InsertBetweenNodes extends Phaser.Scene {
                 panel.greenFeedback();
                 rotateRight(this, player, node)
                 if (tasks[0] == data.task[0]) {
-                    expert.talk('insertBetweenNodes', 3)
+                    expert.talk('insertBetweenNodes',3,'nosymbol')
                 }
             } else {
                 panel.redFeedback();
@@ -485,7 +485,7 @@ export class InsertBetweenNodes extends Phaser.Scene {
                 panel.greenFeedback();
 
                 if (tasks[0] == data.task[0]) {  // if it's the first task then talk about that
-                        expert.talk('insertBetweenNodes', 2);
+                        expert.talk('insertBetweenNodes',2,'nosymbol');
                 }
             } else {
                 panel.redFeedback();

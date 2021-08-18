@@ -43,7 +43,7 @@ export class FlipColors extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Flip Colors');
-        expert.talk('flipColors',0);
+        expert.talk('flipColors',0,'nosymbol');
     }
 
     create() {
@@ -76,7 +76,7 @@ export class FlipColors extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('flipColors',2);
+                        expert.talk('flipColors',2,'nosymbol');
                     }
                 // }
             }           

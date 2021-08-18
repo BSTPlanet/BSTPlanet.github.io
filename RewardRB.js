@@ -209,7 +209,7 @@ export class RewardRB extends Phaser.Scene {
                     scene.time.addEvent({
                         delay: 15_000,
                         callback: function(scene) {
-                            expert.talk('rewardRB',2,'close');
+                            expert.talk('rewardRB',2,'nosymbol');
                             tree.setvarToReturnToDefault();
                         },
                         args: [scene]
@@ -287,7 +287,7 @@ export class RewardRB extends Phaser.Scene {
                                 scene.time.addEvent({
                                     delay: 10_000,
                                     callback: function(scene) {
-                                        expert.talk('rewardRB',3,'close')
+                                        expert.talk('rewardRB',3,'nosymbol')
                                     },
                                     args: [scene]
                                 });
@@ -301,7 +301,7 @@ export class RewardRB extends Phaser.Scene {
                                 scene.time.addEvent({
                                     delay: 10_000,
                                     callback: function(scene) {
-                                        expert.talk('rewardRB',4,'close')
+                                        expert.talk('rewardRB',4,'nosymbol')
                                     },
                                     args: [scene]
                                 });
@@ -315,7 +315,7 @@ export class RewardRB extends Phaser.Scene {
                                 scene.time.addEvent({
                                     delay: 10_000,
                                     callback: function(scene) {
-                                        expert.talk('rewardRB',2,'close')
+                                        expert.talk('rewardRB',2,'nosymbol')
                                     },
                                     args: [scene]
                                 });

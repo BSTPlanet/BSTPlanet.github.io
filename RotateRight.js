@@ -44,7 +44,7 @@ export class RotateRight extends Phaser.Scene {
         this.scene.remove('ExpertAlien');
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
-        panel.setLevelName('RB Rotate Left');
+        panel.setLevelName('RB Rotate Right');
         expert.talk('rotateRight',0);
     }
 
@@ -77,13 +77,13 @@ export class RotateRight extends Phaser.Scene {
                 //     expert.talking = true;
 
                     if (expert.progressCounter == 1 ) {
-                        expert.talk('rotateRight',1)
+                        expert.talk('rotateRight',1,'nosymbol');
                     }
                     if (expert.progressCounter == 3) {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('rotateRight', 3);
+                        expert.talk('rotateRight',3,'nosymbol');
                     }
                 // }
             }           

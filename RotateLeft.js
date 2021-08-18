@@ -45,7 +45,7 @@ export class RotateLeft extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Rotate Left');
-        expert.talk('rotateLeft',0);
+        expert.talk('rotateLeft',0,'nosymbol');
     }
 
     create() {
@@ -77,7 +77,7 @@ export class RotateLeft extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('rotateLeft',2);
+                        expert.talk('rotateLeft',2,'nosymbol');
                     }
             }           
         });

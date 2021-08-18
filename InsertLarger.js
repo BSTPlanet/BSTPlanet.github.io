@@ -45,7 +45,7 @@ export class InsertLarger extends Phaser.Scene {
         panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
         panel.setLevelName('RB Insert Larger Node');
-        expert.talk('insertLarger',0);
+        expert.talk('insertLarger',0,'close');
     }
 
     create() {
@@ -78,7 +78,7 @@ export class InsertLarger extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('insertLarger',3);
+                        expert.talk('insertLarger',3,'nosymbol');
                     }
                 // }
             }           
@@ -247,7 +247,7 @@ export class InsertLarger extends Phaser.Scene {
                         player.setPosition(tree.root.x,tree.root.y-BUFFER);
                         panel.greenFeedback('GOOD JOB!');
                         if (tasks[0] == data.task[0]){
-                            expert.talk('insertLarger',1)
+                            expert.talk('insertLarger',1,'nosymbol');
                         }
                     } else {
                         panel.redFeedback('TRY AGAIN');

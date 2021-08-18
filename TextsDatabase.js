@@ -60,43 +60,44 @@ export class TextsDatabase {
 
 
         // RB
-        this.aboutRBTexts = ['Seems like we are in a new region of the BST planet! It may look nicer, but in reality it\'s more complicated to navigate, so don\'t be fooled!',
-                             'Red-black trees are designed to prevent imbalanced insertion in the trees, no matter what the inserted element sequence is. So the red-black trees will be near-perfect balance. (explain what it means to be balanced..).',
-                             'Let\'s see how the same sequence of elements looks in a BST and in RB-BST. I will give you 10 elements which will come in sorted decreasing order, try to insert them into a BST and see how the tree looks! Press SPACEBAR to begin inserting.',
+        this.aboutRBTexts = ['Wow, you\’re fast! You just entered a region called Left-Leaning Red-Black Binary Search Tree (we\’ll refer to it as RB BST). The rules here are a bit different than what you already know. Let\’s start with the basics.',
+                             'Red-black trees are designed to prevent imbalanced insertion in the trees, no matter what the inserted element sequence is. That makes the insertion much quicker!',
+                             'Let\'s see how the same sequence of elements is inserted in a BST and in a RB-BST. I will give you 10 elements which will come in sorted decreasing order, try to insert them into a BST and see how the tree looks! Hit SPACEBAR to begin!',
                              'Wow, it\'s getting a little tiresome!',
-                             'Alright, so this is how the binary search tree looks! If you can call this a tree.. Let\'s now insert the same elements into a red-black tree! I will perform the operations of red-black tree for you, all you got to do is insert. Press SPACEBAR to begin inserting.',
+                             'Alright, so this is how the binary search tree looks! It took a while to insert the node 50... Let\'s now insert the same elements into a RB-BST! I will perform the operations of the red-black tree for you, all you\’ve got to do is insert. Hit SPACEBAR to begin!',
                              'That\'s it! You see, the tree is much more balanced! The special red-black tree properties and operations enable the tree to balance itself.',
-                             'There are some things to notice about the red-black trees. Firstly, no node has two red links connected to it, that is not allowed! Look at the tree!',
-                             'Second, every path from root to null link has the same number of black links. This property is called perfect black balance. I will show you on the tree, see?',
+                             'There are some things to notice about the red-black trees. First, all links are assigned a color - either red or black. The link assigned to the node is on top of the node. A newly inserted node has a red link to its parent, while a null has a black link to its parent. But remember that the root of the tree always has a black link, which is invisible!',
+                             'Second, no node has two red links connected to it, and a red node cannot be a child or a parent of another red node. That is not allowed! Look at the tree!',
+                             'Third, every path from root to null link has the same number of black links. This property is called perfect black balance. I will show you on the tree, see?',
                              'And lastly, all red links lean left. See those two red links? They lean left. And all of the right leaning links are black!',
-                             'Now that you are a bit familiar with the red-black trees, let\'s learn the red-black tree operations that will allow you to maintain those properties. Press SPACEBAR to learn how to flip colors!'];
+                             'Now that you are a bit familiar with the red-black trees, let\'s learn the red-black tree operations that will allow you to maintain those properties!'];
 
         this.flipColorsTexts = ['Let’s learn how to flip the colors of the links!  First, we will perform the operation together and then you will try to do it on your own! Press F while standing on 519 to flip the colors.',
-                                'Great! Now press SPACEBAR to perform the next task on your own!',
+                                'Great! Now press SPACEBAR to perform the next task on your own and on a different tree!',
                                 'Try to flip colors of 77s children links.',
                                 'You did it! Now let\’s learn how to rotate left!'];
 
         this.rotateLeftTexts = ['Let\’s learn how to rotate left! The node with the red right link is 714 - this link must be rotated. Notice that 700 is a left child of 714 and 714\'s parent is 696. Press L while standing on 714 to rotate it left.',
-                            'Great! As you might have noticed the old parent (696) of 714 is now the left child of 714. 700 (the old left child of 714) is now a right child of 696. The red right link is now a red left link. Now perform the next task on your own!',
+                            'Great! As you might have noticed the old parent (696) of 714 is now the left child of 714. 700 (the old left child of 714) is now a right child of 696. The red right link is now a red left link. Now perform the next task on your own on a different tree!',
                             'Try to rotate the red right link.',
                             'Nicely done! Let\'s keep up the good work and learn how to rotate right.' ];
 
         this.rotateRightTexts = ['Let\’s learn how to rotate right! It sounds like it\’s similar to the rotate left, but in reality it differs quite a lot, so don\'t be fooled!',
                                     'The node with the red left link that must be rotated to the right is 400. Notice that the parent of 400 is 800 and the right child of 400 is 512. Press R while standing on 400 to rotate right. ',
-                                    'Great! As you have noticed the old parent (800) of 400 is now the right child of 400. 513 (the old right child of 400) is now a left child of 800. The red left link is now a red right link. Press SPACEBAR to try rotating by yourself',
-                                    'Try to rotate the red left link.',
+                                    'Great! As you have noticed the old parent (800) of 400 is now the right child of 400. 513 (the old right child of 400) is now a left child of 800. The red left link is now a red right link. Now try rotating by yourself on a different tree!',
+                                    'Try to rotate the top red left link.',
                                     'Easy peasy! Now let’s try and use your skills in real-life situations!'];
 
         this.insertLargerTexts = ['After you\’ve learned the RB operations, let\'s practice them, by inserting new nodes and maintaining the RB properties. Try to do the task.',
                                     'Now you need to maintain the tree. Let me help you - when you have a node with two red children you always need to flip the colours - use the F button.',
-                                    'Great! Now press SPACEBAR to try it out in the next task on your own!',
+                                    'Great! Now try it out in the next task on your own on a different tree!',
                                     'Insert the node and maintain the tree.',
                                     'You’re doing great! Let’s move on to the next exercise.' ];
 
         this.insertSmallerTexts = ['Let\'s try something different. Try to do the task.',
                                     'Now you need to maintain the tree. Let me give you a hint - whenever having two consecutive red links, the top red link must be rotated right.',
                                     'Now you have a node with two red children… yes, you need to flip colors!',
-                                    'Great! Now press SPACEBAR to try it out in the next task on your own!',
+                                    'Great! Now try it out in the next task on your own on a different tree!',
                                     'Insert the node and maintain the tree.',
                                     'You got this! Let’s move on to the next exercise.'];
 
@@ -104,7 +105,7 @@ export class TextsDatabase {
                                         'Now you need to maintain the tree. Let me help you - whenever you have a node with a red right link, you need to rotate that link to the left.',
                                         'Now you have two consecutive red links… yes, you need to rotate right!',
                                         'Good job! You know the last part, don\’t you? Flip the colors!',
-                                        'Great! Now press SPACEBAR to try it out in the next task on your own!',
+                                        'Great! Now try it out in the next task on your own on a different tree!',
                                         'Insert the node and maintain the tree.',
                                         'You got this! Let’s move on to the last exercise!'];
 
@@ -112,9 +113,9 @@ export class TextsDatabase {
                                     'Now you need to maintain the tree. My hint is: two consecutive red links.',
                                     'Two children with red links..? Something\’s not right.',
                                     'Okay, one right red link is still in our way!',
-                                    'Great! Now press SPACEBAR to try it out in the next task on your own!',
+                                    'Great! Now try it out in the next task on your own on a different tree!',
                                     'Insert the node and do the rotations yourself. I believe in you!',
-                                    'I’m starting to prepare a welcome party for you! You did great!'];
+                                    'I’m starting to prepare a welcoming party for you! You did great!'];
 
         this.rewardRBTexts = [ 'Wow, your hard work paid off! You’ve finished all the levels and collected all of the nodes! Now insert all of the collected nodes into this tree, maintain the tree, and find the lost screwdriver!',
                                 'Now you need to maintain the tree.',

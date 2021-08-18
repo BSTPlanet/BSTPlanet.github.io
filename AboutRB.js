@@ -81,12 +81,14 @@ export class AboutRB extends Phaser.Scene {
                     playBSTsection(this);                   // BST insertion continued
                 } else if (expert.progressCounter == 5) {
                     playRBsection(this);                // RB insertion
-                } else if (expert.progressCounter == 6) {  // no two red links
-                    this.cameras.main.zoom = 0.4;
+                } else if (expert.progressCounter == 6) {
                     expert.talk('aboutRB',6);
+                } else if (expert.progressCounter == 7) {  // no two red links
+                    this.cameras.main.zoom = 0.4;
+                    expert.talk('aboutRB',7);
                     // add a bit of delay (in the calling function add something to 0)
                     blinkChildrenLinks(this);
-                } else if (expert.progressCounter == 7) {  // prefect black balance
+                } else if (expert.progressCounter == 8) {  // prefect black balance
                     // remove previous tweens
                     this.RB_events.forEach(tween => {
                         tween.stop();
@@ -94,7 +96,7 @@ export class AboutRB extends Phaser.Scene {
                     });
                     fixLinksAlpha();
 
-                    expert.talk('aboutRB',7);
+                    expert.talk('aboutRB',8);
                     var balanceNodes = [[275,169,78,70,50,'null'],[275,169,78,70,70,'null'],[275,169,78,100,100,'null'],[275,169,169,211,211,'null']];
 
                     this.event1 =
@@ -122,7 +124,7 @@ export class AboutRB extends Phaser.Scene {
                             args: [this]
                         });
                     
-                } else if (expert.progressCounter == 8) {  // red lean left
+                } else if (expert.progressCounter == 9) {  // red lean left
                     // remove previous tweens
                     this.RB_events.forEach(tween => {
                         tween.stop();
@@ -141,9 +143,9 @@ export class AboutRB extends Phaser.Scene {
 
                     fixLinksAlpha();
 
-                    expert.talk('aboutRB',8);
+                    expert.talk('aboutRB',9);
                     blinkRedLinks(this);
-                } else if (expert.progressCounter == 9) {  // last line, tasks and expert says to press spacebar to go to next level
+                } else if (expert.progressCounter == 10) {  // last line, tasks and expert says to press spacebar to go to next level
                     // remove previous tweens
                     this.RB_events.forEach(tween => {
                         tween.stop();
@@ -151,9 +153,9 @@ export class AboutRB extends Phaser.Scene {
                     });
                     fixLinksAlpha();
 
-                    expert.talk('aboutRB',9);
+                    expert.talk('aboutRB',10);
                     panel.allTasksDone();
-                } else if (expert.progressCounter == 10) {
+                } else if (expert.progressCounter == 11) {
                     destroyEverything();
                     this.scene.stop();
                     this.scene.launch("FlipColors", {task: singleTon.flipColorsTasks, tree: singleTon.flipColorsTree, singleTon: singleTon});
@@ -326,7 +328,7 @@ export class AboutRB extends Phaser.Scene {
                 if(node.key == path[index]) {
                     if (node.left != null && node.right != null) {
                         if (node.left.key == path[index+1]) {
-                            var bb_text = scene.add.text(node.left.link.x,node.left.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#000000' });
+                            var bb_text = scene.add.text(node.left.link.x,node.left.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff' });
                             var RB_tween = scene.tweens.add({
                                 targets: node.left.link,
                                 delay: delay,
@@ -341,7 +343,7 @@ export class AboutRB extends Phaser.Scene {
                                 onCompleteParams: [bb_text]
                             });
                         } else if (node.right.key == path[index+1]) {
-                            var bb_text = scene.add.text(node.right.link.x,node.right.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#000000' });
+                            var bb_text = scene.add.text(node.right.link.x,node.right.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff' });
                             var RB_tween =  scene.tweens.add({
                                 targets: node.right.link,
                                 delay: delay,
