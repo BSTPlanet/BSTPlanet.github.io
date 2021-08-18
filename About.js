@@ -13,6 +13,13 @@ var controls;
 export class About extends Phaser.Scene {
 
     preload () {
+        // *************INIT HELP BUBBLE*************
+        this.scene.remove('HelpBubble_keyboard');
+        this.helpBubble_key = 'HelpBubble_keyboard';
+        this.helpBubble_scene = new HelpBubble('HelpBubble_keyboard');
+        this.helpBubble = this.scene.add(this.helpBubble_key, this.helpBubble_scene, true);
+        this.helpBubble.setHelp('keyboard_BST');
+        
         this.scene.remove('Panel');
         this.scene.remove('ExpertAlien');
         panel = this.scene.add('Panel', Panel, true);
