@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <style>
+            #input-form {
+                padding: 15px;
+                /* background-color: #fcba03; */
+            }
+            #input-form input {
+                padding: 10px;
+                font-size: 20px;
+                width: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="input-form" style="pointer-events: auto">
+            <input type="text" name="name" placeholder="Your Name or Nickname" minlength="1" maxlength="14" required />
+        </div>
+    </body>
+</html>
+
+<!-- added style="pointer-events: auto" in the div to enable the input form to take input, solution found in the following link: -->
+<!-- https://phaser.discourse.group/t/dom-container-blocks-pointer-events/9261/9 -->

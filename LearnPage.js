@@ -1,3 +1,6 @@
+import { HelpBubble } from './HelpBubble.js';
+import { Database } from './Database.js';
+
 var buttons;
 var currentButton;
 var keyEnter;
@@ -7,6 +10,7 @@ var selector;
 var downAllowed = false;
 var upAllowed = false;
 var enterAllowed = false;
+var database = new Database();
 
 export class LearnPage extends Phaser.Scene {
     constructor() {
@@ -14,18 +18,26 @@ export class LearnPage extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('selectionSprite_large', 'Assets/Menu/selectionSprite_large.png');
-        this.load.image('background_space_green', 'Assets/Menu/background_menu_green_scaled.png');
-        this.load.image('button_BST', 'Assets/Menu/button_bst.png');
-        this.load.image('button_RB', 'Assets/Menu/button_rbbst.png');
+
     }
 
     create() {
 
+        this.add.text(80,50, 'LEARN', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#72d678' });
+
+        // this.scene.remove('HelpBubble');
+        this.helpBubble_key = 'HelpBubble_learn';
+        this.helpBubble_scene = new HelpBubble('HelpBubble_learn');
+        this.helpBubble = this.scene.add(this.helpBubble_key, this.helpBubble_scene, true);
+        this.helpBubble.setHelp('learn');
+
         // switch to another scene on Esc
         var keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         keyEsc.on('down', () => {
+            // pause/remove/disable the helpBubble
+            this.scene.sleep('HelpBubble_learn');
             this.scene.switch('TitlePage');
+            this.scene.wake('HelpBubble_title');
         });
         
         // background
@@ -37,19 +49,19 @@ export class LearnPage extends Phaser.Scene {
         buttons = [];
 
         // learn button with physics enabled
-        var learnButton = this.add.image(800,350,'button_BST');
+        var learnButton = this.add.image(800,380,'button_BST');
 
         learnButton.setName("BST");
         buttons.push(learnButton);
 
         // play button with physics enabled
-        var playButton = this.add.image(800,550,'button_RB');
+        var playButton = this.add.image(800,580,'button_RB');
 
         playButton.setName("RB");
         buttons.push(playButton);
 
         // selection sprite / selector (the "glowy" yellow thing)
-        selector = this.add.image(800-5,350-10,'selectionSprite_large').setDepth(2);
+        selector = this.add.image(800-5,380-10,'selectionSprite_large').setDepth(2);
 
         // init keyboard buttons
         cursors = this.input.keyboard.createCursorKeys();
@@ -96,13 +108,14 @@ export class LearnPage extends Phaser.Scene {
             enterAllowed = true;
         }
         if (enterAllowed && keyEnter.isUp) {
+            this.scene.sleep('HelpBubble_learn');
             // go to the scene the curentButton is associated with
             if (currentButton.name == "BST") {
-                // this.input.keyboard.removeAllKeys(true);
-                this.scene.switch('MenuBST');
+                this.scene.sleep();
+                this.scene.run('MenuBST',database);
             } else if (currentButton.name == "RB") {
-                // this.input.keyboard.removeAllKeys(true);
-                this.scene.switch('MenuRB');
+                this.scene.sleep();
+                this.scene.run('MenuRB',database);
             }
             enterAllowed = false;
         }

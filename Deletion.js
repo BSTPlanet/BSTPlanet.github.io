@@ -1,7 +1,21 @@
 import { Tree } from './Tree.js';
 import { NodeBST } from './NodeBST.js';
-var numsToInsert = [];
-var tasks = [];
+import { Panel } from './Panel.js';
+import { ExpertAlien } from './ExpertAlien.js';
+import { HelpBubble } from './HelpBubble.js';
+
+var numsToInsert;
+var tasks;
+var singleTon;
+var data;
+var panel;
+var expert;
+const node_min = {x: 990, y: 813, name: "node_129" }
+const node_max = {x: 1045, y: 813, name: "node_791" }
+const node_421 = {x: 1100, y: 813, name: "node_421" }
+const node_655 = {x: 1155, y: 813, name: "node_655" }
+const node_338 = {x: 1210, y: 813, name: "node_338" }
+var controls;
 
 export class Deletion extends Phaser.Scene {
 
@@ -9,86 +23,122 @@ export class Deletion extends Phaser.Scene {
         super({ key:'Deletion' });
     }
 
-    init (data) {
-        numsToInsert = data.tree
-        tasks.push(data.task)
-        console.log("Task: " + data.task)
+    init (data1) {
+        numsToInsert = [];
+        tasks = [];
+        data = {};
+        singleTon = data1.singleTon
+        numsToInsert = data1.tree
+        tasks = data1.task.slice()
+        data = data1;
     }
 
     preload() {
-        this.load.image('background', 'Assets/background_planet_pink_singleLarge.png');
-        this.load.image('onion', 'Assets/alien_pink.png');
-        this.load.image('node_yellow', 'Assets/node_yellow_scaled.png'); // yellow node
-        this.load.image('node_curtain', 'Assets/node_curtain.png'); // node curtain
-        this.load.image('node_null', 'Assets/node_null_scaled.png'); // gray node null
+        // *************INIT HELP BUBBLE*************
+        this.scene.remove('HelpBubble_keyboard');
+        this.helpBubble_key = 'HelpBubble_keyboard';
+        this.helpBubble_scene = new HelpBubble('HelpBubble_keyboard');
+        this.helpBubble = this.scene.add(this.helpBubble_key, this.helpBubble_scene, true);
+        this.helpBubble.setHelp('keyboard_BST');
+
+
+        // *************INIT PANEL AND EXPERT*************
+        this.scene.remove('Panel');
+        this.scene.remove('ExpertAlien');
+        panel = this.scene.add('Panel', Panel, true);
+        expert = this.scene.add('ExpertAlien', ExpertAlien, true);
+        panel.setLevelName(data.levelName);
+
+        if (tasks[0] == 'Min') {
+            // expert.talk('deleteMin')
+            expert.talk('deleteMin',0,'continue');
+        } else if (tasks[0] == 'Max') {
+            // expert.talk('deleteMax')
+            expert.talk('deleteMax',0,'continue');
+        } else if (tasks[0] == 734) {
+            // expert.talk('deleteNoChild')
+            expert.talk('deleteNoChild',0,'continue');
+        } else if (tasks[0] == 76) {
+            // expert.talk('deleteOneChild')
+            expert.talk('deleteOneChild',0,'continue');
+        } else if (tasks[0] == 631) {
+            // expert.talk('deleteTwoChildren')
+            expert.talk('deleteTwoChildren',0,'continue');
+        }
     }
 
     create() {
+
+        // creat the nodes for the reward level
+        panel.loopOverNodes(singleTon.nodeSet)
+        panel.loopOverTools(singleTon.toolSet)
 
         // *************VARIABLES*************
         // Used to offset y of player so that it does not fall off the node during setPosition
         const BUFFER = 90;
 
-        // var nodetoreturn = null;
-
         // *************SCENE SPECIFIC CODE*************
-
-        this.add.image(10_000,750,'background').setDepth(-1);
-
-        // Text on top of the game world
-        var text1 = this.add.text(9_000,100, 'DELETION BST - array', { fontSize: '30px', fill: '#000' });
-        //Instructions
-        var text2 = this.add.text(10_500,100, 'Instructions:\nBACKSPACE to delete\nBACKSPACE + P to delete node with 2 children\nENTER to insert', { fontSize: '20px', fill: '#000' });
-
-         // Clafifications on the Insert Operation
-        //  var text3 = this.make.text({
-        //     x: 2700,
-        //     y: 1000,
-        //     text: 'You always start searching from the root. To find a key in the tree you have to compare it with the root key and go left if it’s smaller or go right if it’s bigger than the root key. You have to repeat this step until the key of node you are on is equal to the key you’re looking for - that’s when you stop and delete (press BACKSPACE). Sometimes the delete operation is more complicated than that - if the node you’re deleting has two children, you need to replace the deleted node with the leftmost node in the right subtree of the deleted node. In this case you’ll be asked to show which node should replace the node you want to delete (by pressing ENTER).',
-        //     origin: { x: 0.5, y: 0.5 },
-        //     style: {
-        //         fontSize:'28px ',
-        //         fill: 'black',
-        //         align: 'justify',
-        //         wordWrap: { width: 1600 }
-        //     },
-        // });
-
-        // var text4 = this.add.text(2300,1130, 'To go back to the home page press ESC', { fontSize: '30px', fill: '#000' });
-
-        // Go back to the home page
-        // var keyEscape = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        // keyEscape.on('down', () => {
-        //     this.scene.switch('BSTIntroduction');
-        // });
-
-        // Switches from this scene to InsertionLinked
-        // var spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        // spacebar.on('down', () => {
-        //     this.scene.stop('Sandbox');
-        //     this.scene.start('SearchLinked');
-        // });
 
         var spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spacebar.on('down', () => {
-            this.scene.switch('IncorrectBST');
-        });
-
-         // Restart the current scene
-        var keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyR.on('down', () => {
-            destroyEverything();
-            this.scene.restart('Sandbox');
-            this.input.keyboard.removeAllKeys(true);
+            if(tasks.length == 0 && data.task.length != 7) {
+            // choose the correct delete scene
+                if(data.task[1] == "Min") {
+                    this.scene.restart({task: singleTon.deleteMaxTasks, tree: singleTon.deleteMaxTree, singleTon: singleTon, levelName: 'BST Delete max'});
+                    destroyEverything();
+                    this.input.keyboard.removeAllKeys(true);
+                } else if (data.task[1] == "Max") {
+                    this.scene.restart({task: singleTon.deleteNoChildrenTasks, tree: singleTon.deleteNoChildrenTree, singleTon: singleTon, levelName: 'BST Delete node - no children'});
+                    destroyEverything();
+                    this.input.keyboard.removeAllKeys(true);
+                } else if (data.task[1] == 421) {
+                    this.scene.restart({task: singleTon.deleteOneChildTasks, tree: singleTon.deleteOneChildTree, singleTon: singleTon, levelName: 'BST Delete node - one child'});
+                    destroyEverything();
+                    this.input.keyboard.removeAllKeys(true);
+                } else if (data.task[1] == 655) {
+                    this.scene.restart( {task: singleTon.deleteTwoChildrenTasks, tree: singleTon.deleteTwoChildrenTree, singleTon: singleTon, levelName: 'BST Delete - two children'});
+                    destroyEverything();
+                    this.input.keyboard.removeAllKeys(true);
+                }  else if (data.task[1] == 338 && singleTon.set.size == 14) {
+                    this.scene.stop();
+                    this.scene.launch( 'Insertion',{task: singleTon.rewardTasks, tree: singleTon.rewardTree, singleTon: singleTon, levelName: 'Reward'});
+                    destroyEverything();
+                    this.input.keyboard.removeAllKeys(true);
+                } else if (data.task[1] == 338 && singleTon.set.size != 14 && expert.progressCounter == 8) {
+                    // expert.talk() that you haven't found all of the reward nodes yet
+                    expert.talk('rewardLocked',0,'nosymbol');
+                }
+            } else if (expert.talking == false) {
+                expert.talking = true;
+                if (expert.progressCounter == 1) {
+                    if (tasks[0] == 'Min') {
+                        expert.talk('deleteMin',1,'close');
+                    } else if (tasks[0] == 'Max') {
+                        expert.talk('deleteMax',1,'close');
+                    } else if (tasks[0] == 734) {
+                        expert.talk('deleteNoChild',1,'close');
+                    } else if (tasks[0] == 76) {
+                        expert.talk('deleteOneChild',1,'close');
+                    } else if (tasks[0] == 631) {
+                        expert.talk('deleteTwoChildren',1,'nosymbol');
+                    }
+                }
+            }
         });
 
         var keyEscape = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         keyEscape.on('down', () => {
-            this.scene.switch('MenuBST');
+            destroyEverything();
+            this.scene.stop('Panel');
+            this.scene.stop('ExpertAlien');
+            this.scene.stop('HelpBubble_keyboard');
+            this.scene.stop();
+            this.scene.wake('MenuBST')
+            this.input.keyboard.removeAllKeys(true);
         });
 
         // *************PLAYER*************
-        var player = this.physics.add.sprite(10_000, 300, 'onion');
+        var player = this.physics.add.sprite(10_000, 100, 'onion');
         player.setBounce(0.1);
 
         // *************KEYBOARD*************
@@ -97,86 +147,81 @@ export class Deletion extends Phaser.Scene {
         var cursors = this.input.keyboard.createCursorKeys();
 
         var keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-        var keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        var keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         var keybackspace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
 
         // *************CAMERA AND ZOOM*************
-        this.cameras.main.setBounds(0, 0, 20_000, 20_000);
-        // this.cameras.main.startFollow(player, true, 0.08, 0.08);
-        // this.cameras.main.centerOn(2700,500);
-        this.cameras.main.zoom = 0.5;
+        var keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        var keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        var keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        var keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        var keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        var keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
+        controls = new Phaser.Cameras.Controls.SmoothedKeyControl({
+            camera: this.cameras.main,
+        
+            left: keyA,
+            right: keyD,
+            up: keyW,
+            down: keyS,
+            zoomIn: keyQ,
+            zoomOut: keyE,
+        
+            zoomSpeed: 0.01,
+            minZoom: 0.3,
+            maxZoom: 3,
+        
+            acceleration: 2,
+            drag: 3,
+            maxSpeed: 2
+        });
+
+        this.cameras.main.setBounds(0,0, 20_000, 20_000);
         this.cameras.main.startFollow(player, true, 0.05, 0.05);
-
-        // var isZoomed = true;
-        // var keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        // keyZ.on('down', function () {
-        //     var cam = this.cameras.main;
-        //     if(isZoomed) {  // zoom out
-        //         cam.stopFollow();
-        //         cam.pan(root.x, root.y, 2000, 'Power2'); //x to pan to, y to pan to, pan speed?, pan mode
-        //         cam.zoomTo(0.5, 1000);//zoom distance, duration/speed of zoom
-        //         isZoomed = false;
-        //     } else { // zoom in
-        //         cam.startFollow(player, true, 0.05, 0.05);
-        //         // cam.pan(player.x, player.y, 2000, 'Power2'); //x to pan to, y to pan to, pan speed?, pan mode
-        //         cam.zoomTo(1, 1000);//zoom distance, duration/speed of zoom
-        //         isZoomed = true;
-        //     }
-        // }, this);
-
-        // this.cameras.world.setBounds(0, 0, 600, 2000);
-        // player.setCollideWorldBounds(true);
-
-        // ************* NUMBERS TO INSERT *************
-
-        // GENERATE RANDOM
-        // var numsToInsert = generateNumsToInsert(30);
-        // console.log(numsToInsert);
-
-        function generateNumsToInsert(n) {
-            var arr = [];
-            var i;
-            for(i=0;i<n;i++){
-                var number = Math.floor(Math.random() * (999 - 1) + 1);
-                if(!arr.includes(number)){
-                    arr.push(number);
-                }
-            }
-            return arr;
-        }
-
-        function generateNumsForInsertTask(n) {
-            var arr = [];
-            var i;
-            for(i=0;i<n;i++){
-                var number = Math.floor(Math.random() * (999 - 1) + 1);
-                if(!arr.includes(number) && !numsToInsert.includes(number)){
-                    arr.push(number);
-                }
-            }
-            return arr;
-        }
+        this.cameras.main.zoom = 0.7;
         
         // *************INITIALIZE BST*************
 
-        var tree = new Tree(this);
+        var nodeColor;
+        var backgroundColor;
+        if(data.task[1] == "Min") {
+            nodeColor = singleTon.deleteMinColor;
+            backgroundColor = 'background_planet_raisin';
+        } else if (data.task[1] == "Max") {
+            nodeColor = singleTon.deleteMaxColor;
+            backgroundColor = 'background_planet_darkBlue';
+        } else if (data.task[1] == 421) {
+            nodeColor = singleTon.deleteNoChildrenColor;
+            backgroundColor = 'background_planet_raisin';
+        } else if (data.task[1] == 655) {
+            nodeColor = singleTon.deleteOneChildColor;
+            backgroundColor = 'background_planet_raisin';
+        }  else if (data.task[1] == 338) {
+            nodeColor = singleTon.deleteTwoChildrenColor;
+            backgroundColor = 'background_planet_darkBlue';
+        }
+
+        this.add.image(10_000,750,backgroundColor).setDepth(-1);
+
+        var tree = new Tree(nodeColor,this);
         // BST (intially an empty/null root node)
         tree.createRoot(this);
         tree.createTree(numsToInsert,this);
         setPhysicsTree(tree.root,this);
-        // tree.root.left.drawLinkToParentRB(this);
-
 
         function setPhysicsTree(node,scene) {
             if (node != null) {
+                // specific to delete explanations
+                scene.physics.add.overlap(player, node, triggerExplanation, null, scene);
+
+
                 // teleporting + curtains
                 node.setPhysicsNode(cursors,player,scene);
                 // checks
                 scene.physics.add.overlap(player, node, deleteNode, backspaceIsPressed, scene);
-                scene.physics.add.overlap(player, node, checkAndDeleteSecondNode, pIsPressed, scene);
-                // redraw
-                // scene.physics.add.overlap(node, tree.nodearray, redrawTree, null, scene);
+                scene.physics.add.overlap(player, node, checkAndDeleteSecondNode, mIsPressed, scene);
                 // to stand on the node
                 scene.physics.add.collider(player, node);
 
@@ -184,39 +229,154 @@ export class Deletion extends Phaser.Scene {
                 setPhysicsTree(node.right,scene);
             }
         }
+
+        // *************** DELETE EXPLANATIONS ***************
+
+        var talkNodes;
+        if (tasks[0] == 'Min') {
+            talkNodes = [98];
+        } else if (tasks[0] == 'Max') {
+            talkNodes = [992];
+        } else if (tasks[0] == 734) {
+            talkNodes = [734];
+        } else if (tasks[0] == 76) {
+            talkNodes = [76];
+        } else if (tasks[0] == 631) {
+            talkNodes = [631,791,717];
+        }
+
+        function triggerExplanation(player,node) {
+
+            if (tasks[0] == 'Min') {
+                if(talkNodes[0] == 98 && node.key == talkNodes[0] && expert.progressCounter == 2) {
+                    expert.talk('deleteMin',2,'nosymbol');
+                    talkNodes.shift();
+                }
+            } else if (tasks[0] == 'Max') {
+                if(talkNodes[0] == 992 && node.key == talkNodes[0] && expert.progressCounter == 2) {
+                    expert.talk('deleteMax',2,'nosymbol');
+                    talkNodes.shift();
+                }
+            } else if (tasks[0] == 734) {
+                if(talkNodes[0] == 734 && node.key == talkNodes[0] && expert.progressCounter == 2) {
+                    expert.talk('deleteNoChild',2,'nosymbol');
+                    talkNodes.shift();
+                }
+            } else if (tasks[0] == 76) {
+                if(talkNodes[0] == 76 && node.key == talkNodes[0] && expert.progressCounter == 2) {
+                    expert.talk('deleteOneChild',2,'nosymbol');
+                    talkNodes.shift();
+                }
+            } else if (tasks[0] == 631) {
+                if(talkNodes[0] == 631 && node.key == talkNodes[0] && expert.progressCounter == 2) {
+                    expert.talk('deleteTwoChildren',2,'nosymbol');
+                    talkNodes.shift();
+                } else if(talkNodes[0] == 791 && node.key == talkNodes[0] && expert.progressCounter == 4) {
+                    expert.talk('deleteTwoChildren',4,'nosymbol');
+                    talkNodes.shift();
+                } else if (talkNodes[0] == 717 && node.key == talkNodes[0] && expert.progressCounter == 5) {
+                    expert.talk('deleteTwoChildren',5,'nosymbol');
+                    talkNodes.shift();
+                }
+            }
+        }
         
        // *************** TASKS + TASK ACTIONS ***************
        
 
-        // // displays what operations needs to be performed by the player
+        // displays what operations needs to be performed by the player
         var taskText = this.add.text(9000,175, '', { fontSize: '22px', fill: '#000' });
-        displayTask(this);
-        // // for displaying feedback after completing tasks
-        // var feedback = this.add.text(2000,150, '', { fontSize: '20px', fill: '#000' });
+        displayTask();
 
-        // //while there are still some tasks in the array, displays text indicating what needs to be done
-        // //when tasks is empty then press P to continue to next lesson
-        function displayTask(scene) {
+        //while there are still some tasks in the array, displays text indicating what needs to be done
+        function displayTask() {
             if (tasks.length != 0) { 
-                taskText.setText('Delete ' + tasks[0]);
-                console.log("Tasks on dsiplay:" + tasks[0])
+                if (tasks.length == 1 && (tasks[0] == "Min" || tasks[0] == "Max")) {
+                    panel.refreshTask('Delete ' + tasks[0] + ' again');
+                } else {
+                    panel.refreshTask('Delete ' + tasks[0]);
+                }
             } else {
-                taskText.setText('You did it!!! You did the thing!!!!'); 
-                taskText.setPosition(9000,1100);
-                taskText.setFill('#ff0062');
-                taskText.setFontSize(80);
+                panel.allTasksDone();
             }
         }
 
         function taskSucceededActions(scene) {
+            panel.greenFeedback();
             player.setPosition(tree.root.x,tree.root.y-BUFFER);
+            tree.closeCurtains();
+
+            if(tasks[0] == "Min") {
+                if(!singleTon.set.has(98)) {
+                    singleTon.updateSet(98)
+                } else {
+                    singleTon.updateSet(129)
+                } 
+            } else if (tasks[0] == "Max") {
+                if (!singleTon.set.has(992)) {
+                    singleTon.updateSet(992)
+                } else {
+                    singleTon.updateSet(791)
+                } 
+            } else {
+                singleTon.updateSet(tasks[0])
+            }
+
+            // expert explanations
+            if (tasks[0] == 'Min') {
+                if (expert.progressCounter == 3) {
+                    expert.talk('deleteMin',3,'close');
+                } else if (expert.progressCounter == 4){
+                    expert.talk('deleteMin',4,'continue');
+                } 
+            } else if (tasks[0] == 'Max') {
+                if (expert.progressCounter == 3) {
+                    expert.talk('deleteMax',3,'close');
+                } else if (expert.progressCounter == 4){
+                    expert.talk('deleteMax',4,'continue');
+                } 
+            } else if (tasks[0] == 734 && expert.progressCounter == 3) {  // no child
+                expert.talk('deleteNoChild',3,'close');
+            } else if (tasks[0] == 421 && expert.progressCounter == 4) {  // no child
+                expert.talk('deleteNoChild',4,'continue');
+            } else if (tasks[0] == 76 && expert.progressCounter == 3) {      // one child
+                expert.talk('deleteOneChild',3,'close');
+            } else if (tasks[0] == 655 && expert.progressCounter == 4){      // one child
+                expert.talk('deleteOneChild',4,'continue');
+            } else if (tasks[0] == 631 && expert.progressCounter == 6) {       // two children
+                expert.talk('deleteTwoChildren',6,'close');
+            } else if (tasks[0] == 338 && expert.progressCounter == 7) {     // two children
+                expert.talk('deleteTwoChildren',7,'continue');
+            }
+
+            if (tasks[0] == "Min" && singleTon.set.has(129) && !(singleTon.nodeSet.has(node_min))) {
+                singleTon.addNode(node_min)
+                panel.rewardNodeActions(129);
+            } else if (tasks[0] == "Max" && singleTon.set.has(791) && !(singleTon.nodeSet.has(node_max))) {
+                singleTon.addNode(node_max)
+                panel.rewardNodeActions(791);
+            } else if (tasks[0] == 421 && !(singleTon.nodeSet.has(node_421))) {
+                singleTon.addNode(node_421)
+                panel.rewardNodeActions(421);
+            }  else if (tasks[0] == 655 && !(singleTon.nodeSet.has(node_655))) {
+                singleTon.addNode(node_655)
+                panel.rewardNodeActions(655);
+            } else if (tasks[0] == 338 && !(singleTon.nodeSet.has(node_338))) {
+                singleTon.addNode(node_338)
+                panel.rewardNodeActions(338);
+            }
+
             tasks.shift();
-            console.log("Task after deleting min" + tasks[0] + tasks.length )
-            // feedback.setPosition(2000,150);
-            // feedback.setText('Good job!!!');
-            // displayTask(scene);
-            // tree.calculateHeight();
-            // tree.closeCurtains();
+
+            if (tasks.length != 0) { 
+                if (tasks.length == 1 && (tasks[0] == "Min" || tasks[0] == "Max")) {
+                    panel.refreshTask('Delete ' + tasks[0] + ' again');
+                } else {
+                    panel.refreshTask('Delete ' + tasks[0]);
+                }
+            } else {
+                panel.allTasksDone();
+            }
         }
 
         // ***************DELETION***************
@@ -247,7 +407,7 @@ export class Deletion extends Phaser.Scene {
                         this.input.keyboard.enabled = false;
 
                         if (node.parent != null) {
-                            player.setPosition(node.parent.x,node.parent.y-BUFFER);
+                            player.setPosition(node.parent.posX,node.parent.posY-BUFFER);
                         }
 
                         // node.left, node.right, node
@@ -278,15 +438,17 @@ export class Deletion extends Phaser.Scene {
                             delay: 2000,
                             duration: 1000,
                             alpha: '+=1',
-                            onComplete: taskSucceededActions,
-                            onCompleteParams: [this]
+                            // onComplete: taskSucceededActions(this),
+                            // onCompleteParams: [this]
                         });
 
                         this.time.addEvent({
-                            delay: 3000,
+                            delay: 4000,
                             callback: function(scene) {
                                 // ENABLE KEYBOARD
+                                taskSucceededActions(scene)
                                 scene.input.keyboard.enabled = true;
+                                // displayTask();
                             },
                             args: [this]
                         });
@@ -364,6 +526,24 @@ export class Deletion extends Phaser.Scene {
                                 args: [node,this]
                             });
 
+                            // appear link that changed
+                            this.time.addEvent({
+                                delay: 2500,
+                                callback: function(scene,node) {
+
+                                    node.left.drawLinkToParent(scene);
+                                    node.left.link.setAlpha(0);
+                                    scene.add.tween({
+                                        targets: node.left.link,
+                                        ease: 'Sine.easeIn',
+                                        duration: 1000,
+                                        alpha: '+=1'
+                                    });
+
+                                },
+                                args: [this,node]
+                            });
+
                             // move player to root, update tasks, enable keyboard
                             this.time.addEvent({
                                 delay: 3000,
@@ -374,7 +554,7 @@ export class Deletion extends Phaser.Scene {
 
                                     tree.redraw(scene);
 
-                                    appearLinksOneChild(node.left, scene);
+                                    // appearLinksOneChild(node.left, scene);
                                     // destroy 15.right
                                     node.right.destroyNode();
                                     // destroy 15
@@ -457,9 +637,27 @@ export class Deletion extends Phaser.Scene {
                                 args: [node,this]
                             });
 
+                            // appear link that changed
+                            this.time.addEvent({
+                                delay: 2500,
+                                callback: function(scene,node) {
+
+                                    node.right.drawLinkToParent(scene);
+                                    node.right.link.setAlpha(0);
+                                    scene.add.tween({
+                                        targets: node.right.link,
+                                        ease: 'Sine.easeIn',
+                                        duration: 1000,
+                                        alpha: '+=1'
+                                    });
+
+                                },
+                                args: [this,node]
+                            });
+
                             // move player to root, update tasks, enable keyboard
                             this.time.addEvent({
-                                delay: 3000,
+                                delay: 3500,
                                 callback: function(scene) {
                                     tree.traverseAndCheckCollisions(scene);
                                     tree.traverseAndCheckCrossings(scene);
@@ -467,7 +665,7 @@ export class Deletion extends Phaser.Scene {
     
                                     tree.redraw(scene);
     
-                                    appearLinksOneChild(node.right, scene);
+                                    // appearLinksOneChild(node.right, scene);
                                     // destroy 24.left
                                     node.left.destroyNode();
                                     // destroy 24
@@ -488,36 +686,23 @@ export class Deletion extends Phaser.Scene {
                             },
                             args: [this]
                         });
-
-                        // player.setPosition(tree.root.x,tree.root.y-BUFFER);
-                        // taskSucceededActions(this);
                     } else { // both children are NOT null
                         // setting a value of nodeToDelete to use it after user clicks Enter
                         nodeToDelete = node;
-                        // nodeToDelete.nodeGraphics.setFillStyle(0xff0090, 1);
                         nodeToDelete.nodeGraphics.setTint(0xff0090);
-                        // feedback.setPosition(nodeToDelete.x-700,250);
-                        // feedback.setText('Now select the node you want to exchange the deleted node with.\nUse Enter.');
+                        if(nodeToDelete.key == 631 && expert.progressCounter == 3) {
+                            expert.talk('deleteTwoChildren',3,'nosymbol');
+                        }
                     }
                 } else {
-                    // feedback.setPosition(2000,150);
-                    // feedback.setText('Try again');                
-                    // if(nodeToDelete != null) //node.left.key  != 'null' && node.right.key  != 'null' && 
-                    // {
-                    //     // feedback.setPosition(nodeToDelete.x,185);
-                    //     // feedback.setText('Now select the node you want to exchange the deleted node with.\nUse Enter.\n\nTRY AGAIN'); 
-                    // } else {
-                    //     player.setPosition(tree.root.x,tree.root.y-BUFFER);
-                    // }
-                    this.add.text(9000,1100, 'Try again!', { fontSize: '60px', fill: '#ff0062' });
+                    panel.redFeedback();
+                    player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                    tree.closeCurtains()
+
+
                 }
-            } else {
-                // no more tasks
-                this.add.text(9000,900, 'You are done with the tasks!', { fontSize: '60px', fill: '#ff0062' });
             }
         }
-
-        //code used on overlap when the user clicks Enter - part of the deleteNode logic for deleting nodes with two children
 
         var enterAllowed = false;
         function enterIsPressed() {
@@ -532,30 +717,25 @@ export class Deletion extends Phaser.Scene {
             return moveAllowed;
         }
 
-        var pAllowed = false;
-        function pIsPressed() {
+        var mAllowed = false;
+        function mIsPressed() {
             var moveAllowed = false;
-            if(keyP.isDown){
-                pAllowed = true;
+            if(keyM.isDown){
+                mAllowed = true;
             }
-            if (pAllowed && keyP.isUp) {
+            if (mAllowed && keyM.isUp) {
                 moveAllowed = true;
-                pAllowed = false;
+                mAllowed = false;
             }
             return moveAllowed;
         }
 
+        //code used on overlap when the user clicks Enter - part of the deleteNode logic for deleting nodes with two children
         // code for deletion when both children are NOT null
         function checkAndDeleteSecondNode(player, node){
             if(nodeToDelete != null && node.key != 'null'){
                 var key = min(nodeToDelete.right);
                 if(node.key == key){
-
-                    // Main cases:
-                    // if the right child has nothing on the left - DONE
-                    // if the right child has a left child and it has nulls - IN PROGRESS
-                    // Other cases:
-                    // if the right child has left child and it has right subtree
 
                     if (nodeToDelete.right.left.key == 'null') { // when nodeToDelete's right child IS min (move min and its right subtree up)
 
@@ -605,55 +785,11 @@ export class Deletion extends Phaser.Scene {
                             delay: 2500,
                             callback: function(nodeToDelete,node,scene) {
                                 var distanceX = Math.abs(nodeToDelete.posX-node.posX);
-
-                                // Version 1
-                                // scene.add.tween({
-                                //     targets: player,
-                                //     x: player.x - distanceX, // if 15 is on left branch then we should do +
-                                //     y: player.y - tree.z, // 10 is Buffer
-                                //     ease: 'Power2',
-                                //     duration: 1500,
-                                // });
-
-                                // moveBranch(node,distanceX,scene);
-
                                 // Version 2
                                 updateBranch(node,distanceX);
                             },
                             args: [nodeToDelete,node,this]
                         });
-
-                        // Version 1
-                        // this.time.addEvent({
-                        //     delay: 4500,
-                        //     callback: function(nodeToDelete,node,scene) {
-                        //         if (nodeToDelete == tree.root) { // if deleted node is root
-                        //             tree.root = node;
-                        //             node.left = nodeToDelete.left;  // move 10's left branch to 15
-                        //             node.left.parent = node; // change left branch's parent to 15
-                        //         } else if (nodeToDelete == nodeToDelete.parent.right){ // if deleted node is right child
-                        //             node.left = nodeToDelete.left;  // set 25s left to 16 (move 20's left branch to 25)
-                        //             node.left.parent = node; // set 16s parent to 25 (change left branch's parent to 25)
-                        //             node.parent.right = node; // set 15's right child to 25
-                        //         } else if (nodeToDelete == nodeToDelete.parent.left) { // if deleted node is left child
-                        //             node.left = nodeToDelete.left;
-                        //             node.left.parent = node;
-                        //             node.parent.left = node; 
-                        //         }
-                        //         node.distanceFromParent = nodeToDelete.distanceFromParent;
-                        //         node.left.drawLinkToParent(scene);
-                        //         node.left.link.setAlpha(0);
-                        //         scene.add.tween({
-                        //             targets: node.left.link,
-                        //             ease: 'Sine.easeOut',
-                        //             duration: 1000,
-                        //             alpha: '+=1'
-                        //         });
-                        //         tree.updateNodeDepths(tree.root);
-                        //         nodeToDelete.destroyNode();
-                        //     },
-                        //     args: [nodeToDelete,node,this]
-                        // });
 
                         // Version 2
                         this.time.addEvent({
@@ -688,8 +824,52 @@ export class Deletion extends Phaser.Scene {
                                     ease: 'Power2',
                                     duration: 1500,
                                 });
+
                                 actuallyMoveBranch(node,distanceX,scene);
-                                appearLinks(node,scene);
+
+                                // TODO: ROTATE node.right.link and after it is rotated then redraw to extend:
+                                // node.right.link.setAlpha(0);
+                                // move node link, rotate it and extend it
+                                if (node.right.link != null) {
+
+                                    var N = node.right.distanceFromParent;
+                    
+                                    var O = null;
+                                    if (node.right.distanceFromParent < 0) {
+                                        O = (node.right.link.x - node.right.link.width) - node.right.link.x;
+                                    } else {
+                                        O = (node.right.link.x + node.right.link.width) - node.right.link.x;
+                                    }
+                                    
+                                    var oldAngle = calcAngle(tree.z,O);
+                                    var newAngle = calcAngle(tree.z,N);
+                                    var difference = oldAngle - newAngle;
+                                    
+                                    scene.add.tween({
+                                        targets: node.right.link,
+                                        x: node.right.posX, 
+                                        y: node.right.posY,
+                                        ease: 'Power2',
+                                        duration: 1500
+                                    });
+                                    
+                                    if (difference != 0) {
+                                        // ROTATION TWEEN:
+                                        scene.add.tween({
+                                            targets: node.right.link,
+                                            angle: -difference,
+                                            ease: 'Sine.easeInOut',
+                                            duration: 1500,
+                                            onComplete: drawLink,
+                                            onCompleteParams: [node.right,scene]
+                                        });
+                                        
+                                        function drawLink(tween,targets,node,scene) {
+                                            node.drawLinkToParent(scene);
+                                        }
+                                    }
+                                }
+                                // appearLinks(node,scene);
                             },
                             args: [nodeToDelete,node,this]
                         });
@@ -699,14 +879,17 @@ export class Deletion extends Phaser.Scene {
                         this.time.addEvent({
                             delay: 4500,
                             callback: function(node,scene) {
-                                // node.left.drawLinkToParent(scene);
-                                // node.left.link.setAlpha(0);
+                                node.drawLinkToParent(scene);
+                                node.link.setAlpha(0);
+                                node.left.drawLinkToParent(scene);
+                                node.left.link.setAlpha(0);
                                 scene.add.tween({
-                                    targets: node.left.link,
+                                    targets: [node.link, node.left.link],
                                     ease: 'Sine.easeIn',
                                     duration: 1000,
                                     alpha: '+=1'
                                 });
+                                
                             },
                             args: [node,this]
                         });
@@ -715,19 +898,9 @@ export class Deletion extends Phaser.Scene {
                         this.time.addEvent({
                             delay: 5800,
                             callback: function(node,scene) {
-                                // nodeToDelete.setKey(node.key);
-                                // nodeToDelete.setFillStyle(0xF5CBDD, 1);
-                                // deleteMin(node);
                                 nodeToDelete.destroyNode();
                                 nodeToDelete = null;
                                 tree.updateNodeDepths(node);
-                                // tree.updateNodePosX();
-
-                                // Version 1
-                                // tree.traverseAndCheckCollisions(scene);
-                                // tree.traverseAndCheckCrossings(scene);
-                                // tree.redraw(scene);
-
                                 // Version 2
                                 // A way to move the branch together with already expanded branch:
                                 // in moveBranch only update the posX - line 643
@@ -794,7 +967,7 @@ export class Deletion extends Phaser.Scene {
                                 delay: 2100,
                                 callback: function(nodeToDelete,node,scene) {
                                     // make null for 20
-                                    var childL = new NodeBST(scene,node.parent.posX-tree.w, node.parent.posY+tree.z, 'null',node.parent.dpth+1,node.parent);
+                                    var childL = new NodeBST(scene, singleTon.deleteMinColor, node.parent.posX-tree.w, node.parent.posY+tree.z, 'null',node.parent.dpth+1,node.parent);
                                     childL.distanceFromParent = -tree.w;
                                     node.parent.left = childL;
                                     childL.nullGraphics.setAlpha(0);
@@ -807,9 +980,8 @@ export class Deletion extends Phaser.Scene {
                                     childL.setPhysicsNode(cursors,player,scene);
 
                                     // physics
-                                    scene.physics.add.overlap(player, childL, insert, enterIsPressed, scene);
                                     scene.physics.add.overlap(player, childL, deleteNode, backspaceIsPressed, scene);
-                                    scene.physics.add.overlap(player, childL, checkAndDeleteSecondNode, pIsPressed, scene);
+                                    scene.physics.add.overlap(player, childL, checkAndDeleteSecondNode, mIsPressed, scene);
                                     scene.physics.add.collider(player, childL);
                                     
                                     node.left.destroyNode(); // destroy null left child of 16
@@ -936,12 +1108,8 @@ export class Deletion extends Phaser.Scene {
                             this.time.addEvent({
                                 delay: 8000,
                                 callback: function(node,scene) {
-                                    // nodeToDelete.setKey(node.key);
-                                    // nodeToDelete.setFillStyle(0xF5CBDD, 1);
-                                    // deleteMin(node);
                                     nodeToDelete = null;
                                     tree.updateNodeDepths(node);
-                                    // tree.updateNodePosX();
                                     tree.traverseAndCheckCollisions(scene);
                                     tree.traverseAndCheckCrossings(scene);
                                     tree.redraw(scene);  
@@ -964,9 +1132,7 @@ export class Deletion extends Phaser.Scene {
                                 delay: 2100,
                                 callback: function(nodeToDelete,node,scene) {
                                     node.left.destroyNode(); // node is min. we destroy its left child because it wont be needed anymore/it will be replaced
-                                    // node.right.destroyNode();
                                     node.left = null;
-                                    // node.right = null;
                                     node.parent = nodeToDelete.parent;
                                     node.dpth = nodeToDelete.dpth;
                                 },
@@ -1022,21 +1188,8 @@ export class Deletion extends Phaser.Scene {
                                 args: [nodeToDelete,node,this]
                             });
 
-                            // this.time.addEvent({
-                            //     delay: 5500,
-                            //     callback: function(nodeToDelete,node,scene) {
-                            //         // var distanceX = Math.abs(node.posX-node.right.posX);
-    
-                            //         // updateBranch(node.right,distanceX); //v2
-
-                            //         // moveBranch(node.right,distanceX,scene);
-
-                            //     },
-                            //     args: [nodeToDelete,node,this]
-                            // });
-
                             this.time.addEvent({
-                                delay: 6000,
+                                delay: 4500,
                                 callback: function(nodeToUseForAppear,nodeToDelete,node,scene) {
 
                                     var distanceX = Math.abs(node.posX-node.right.posX);
@@ -1089,11 +1242,16 @@ export class Deletion extends Phaser.Scene {
                                     actuallyMoveBranch(nodeToUseForAppear.left,distanceX,scene); //v2
 
                                     // appearLinks(node.right, scene);
+
+                                    node.drawLinkToParent(scene);
+                                    node.link.setAlpha(0);
+                                    nodeToUseForAppear.left.drawLinkToParent(scene);
+                                    nodeToUseForAppear.left.link.setAlpha(0);
                                     
                                     if (node.parent != null) {
                                         scene.add.tween({
                                             targets: [node.link],
-                                            delay: 1000,
+                                            delay: 1500,
                                             ease: 'Sine.easeOut',
                                             duration: 1000,
                                             alpha: '+=1'
@@ -1102,7 +1260,7 @@ export class Deletion extends Phaser.Scene {
 
                                     scene.add.tween({
                                         targets: [node.left.link, node.right.link, nodeToUseForAppear.left.link], //node.right.left.link
-                                        delay: 1000,
+                                        delay: 1500,
                                         ease: 'Sine.easeOut',
                                         duration: 1000,
                                         alpha: '+=1'
@@ -1115,20 +1273,13 @@ export class Deletion extends Phaser.Scene {
                             });
 
                             this.time.addEvent({
-                                delay: 8000,
+                                delay: 7000,
                                 callback: function(nodeToUseForAppear,node,scene) {
-                                    // nodeToDelete.setKey(node.key);
-                                    // nodeToDelete.setFillStyle(0xF5CBDD, 1);
-                                    // deleteMin(node);
                                     nodeToDelete = null;
                                     tree.updateNodeDepths(node);
-                                    // tree.updateNodePosX();
                                     tree.traverseAndCheckCollisions(scene);
                                     tree.traverseAndCheckCrossings(scene);
-                                    tree.redraw(scene);
-    
-                                    appearLinksOneChild(nodeToUseForAppear.left,scene);
-    
+                                    tree.redraw(scene);    
                                 },
                                 args: [nodeToUseForAppear,node,this]
                             });
@@ -1136,7 +1287,7 @@ export class Deletion extends Phaser.Scene {
                         } //end of else if
 
                         this.time.addEvent({
-                            delay: 9000,
+                            delay: 8000,
                             callback: function(scene) {
                                 taskSucceededActions(scene);
                                 displayTask(scene);
@@ -1150,9 +1301,9 @@ export class Deletion extends Phaser.Scene {
                     } //end of else if
 
                 } else {
+                    panel.redFeedback();
                     player.setPosition(nodeToDelete.x,nodeToDelete.y-BUFFER);
-                    // feedback.setPosition(nodeToDelete.x,175); 
-                    // feedback.setText('Now select the node you want to exchange the deleted node with.\nUse Enter.\n\nTRY AGAIN');
+                    tree.closeCurtains()
                 }
             }
         }
@@ -1164,52 +1315,6 @@ export class Deletion extends Phaser.Scene {
         //     callback: console.log,
         //     args: ["TELL ME WHY"]
         // });
-
-        // Version 1
-        // function moveBranch(node,distanceX,scene) {
-        //     if (node != null) {
-
-        //         node.link.destroy();
-
-        //         scene.add.tween({
-        //             targets: [node, node.curtain, node.keyString],
-        //             x: node.posX - distanceX, // if 15 is on left branch then we should do +
-        //             y: node.posY - tree.z,
-        //             ease: 'Power2',
-        //             duration: 1500,
-        //         });
-
-
-        //         // move links:
-        //         // scene.add.tween({
-        //         //     targets: [node.x1,node.y1,node.x2,node.y2],
-        //         //     x: 20000,
-        //         //     y: 10000,
-        //         //     // x1: { from: node.link.x1, to: node.link.x1+100 },
-        //         //     // y1: { from: node.link.y1, to: node.link.y1+100 },
-        //         //     // x2: 10080,
-        //         //     // y2: 10080,
-        //         //     ease: 'Power2',
-        //         //     duration: 1000
-        //         // });
-
-        //         scene.time.addEvent({
-        //             delay: 1500,
-        //             callback: function(node,scene) {
-        //                 node.drawLinkToParent(scene);
-        //                 node.body.updateFromGameObject();
-        //                 node.curtain.body.updateFromGameObject();
-        //             },
-        //             args: [node,scene]
-        //         });
-
-        //         node.posX = node.posX - distanceX; // if 15 is on left branch then we should do + - maybe should always be minus ?
-        //         node.posY = node.posY - tree.z;
-
-        //         moveBranch(node.left,distanceX,scene);
-        //         moveBranch(node.right,distanceX,scene);
-        //     }
-        // }
 
         // Version 2 - Nikol's suggested 
         function updateBranch(node,distanceX) {
@@ -1226,8 +1331,6 @@ export class Deletion extends Phaser.Scene {
         function actuallyMoveBranch(node,distanceX,scene) {
             if (node != null && node.x != node.posX) {
 
-                node.link.destroy();
-
                 scene.add.tween({
                     targets: [node.nodeGraphics, node.nullGraphics, node.curtain, node.keyString],
                     x: node.posX,
@@ -1236,23 +1339,22 @@ export class Deletion extends Phaser.Scene {
                     duration: 1500,
                 });
 
-                // move links - probably not anymore
+                // move links
+                if (node.link != null) {
+                    scene.add.tween({
+                        targets: node.link,
+                        x: node.posX, 
+                        y: node.posY,
+                        ease: 'Power2',
+                        duration: 1500
+                    });
+                }
 
                 scene.time.addEvent({
                     delay: 1500,
                     callback: function(node,scene) {
-                        // node.drawLinkToParent(scene);
-                        // node.link.setAlpha(0);
                         node.body.updateFromGameObject();
                         node.curtain.body.updateFromGameObject();
-
-                        // //tween for appearing links
-                        // scene.add.tween({
-                        //     targets: node.link,
-                        //     ease: 'Sine.easeIn',
-                        //     duration: 1000,
-                        //     alpha: '+=1'
-                        // });
                     },
                     args: [node,scene]
                 });
@@ -1315,28 +1417,6 @@ export class Deletion extends Phaser.Scene {
 
         // HELPER FOR deleteNode
         // THIS FUNCTION IS USED IN THE checkAndDeleteSecondNode FUNCTION
-        // deletes the min node
-        // function deleteMin(node){
-        //     if (node.right.key != 'null') {
-        //         node.setKey(node.right.key);
-        //         var newL = node.right.left;
-        //         var newR = node.right.right;
-        //         node.left.destroyNode();
-        //         node.right.destroyNode();
-        //         node.setChildren(newL, newR);
-        //         node.left.parent = node;
-        //         node.right.parent = node;
-        //     } else {
-        //         node.setKey('null');
-        //         node.setNullGraphics();
-        //         node.left.destroyNode();
-        //         node.right.destroyNode();
-        //         node.setChildren(); // set children as null
-        //     }
-        // }
-
-        // HELPER FOR deleteNode
-        // THIS FUNCTION IS USED IN THE checkAndDeleteSecondNode FUNCTION
         // Returns max node.key of a tree
         function max(node) { 
             var keyToReturn = node.key;
@@ -1351,6 +1431,10 @@ export class Deletion extends Phaser.Scene {
             return keyToReturn;
         }
 
+        function calcAngle(z,smth) {
+            return Math.atan(z/smth) * (180/Math.PI);
+        }
+
         // ***************DESTROY***************
 
         function destroyEverything() {
@@ -1359,16 +1443,12 @@ export class Deletion extends Phaser.Scene {
             
             // destroy everything in the scene (text, player, keyboard)
             player.destroy();
-            text1.destroy();
-            // text2.destroy();
-            // text3.destroy();
-            // text4.destroy();
-            feedback.destroy();
-            taskText.destroy();
+            tasks = null;
+            numsToInsert = null;
         }
     }
 
-    update() {
-
+    update(time,delta) {
+        controls.update(delta);
     }
 }

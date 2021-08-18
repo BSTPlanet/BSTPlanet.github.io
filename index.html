@@ -5,44 +5,53 @@
     <title>GAME_IN_PROGRESS</title>
     <script src="bin/js/phaser.js"></script>
     <link rel="preload" as="font" href="Assets/Fonts/nasalization-rg.otf" type="font/otf" crossorigin>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    
     <style type="text/css">
         body {
             margin: 0;
             background-color: #3d4043;
         }
 
-        canvas{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);               
-        }
-
         @font-face {
             font-family: nasalization-rg;
             src: url('Assets/Fonts/nasalization-rg.otf');
-        }
+        }      
     </style>
 </head>
 <body>
 
 <!-- Scenes: -->
+<script type="module" src="StoryBegin.js"></script>
 <script type="module" src="TitlePage.js"></script>
 <script type="module" src="LearnPage.js"></script>
 <script type="module" src="MenuBST.js"></script>
 <script type="module" src="MenuRB.js"></script>
 <script type="module" src="Play.js"></script>
-<script type="module" src="Sandbox.js"></script>
 <script type="module" src="About.js"></script>
-<script type="module" src="IncorrectBST.js"></script>
-<script type="module" src="SearchLinked.js"></script>
-<script type="module" src="InsertionLinked.js"></script>
-<script type="module" src="DeleteLinked.js"></script>
 <script type="module" src="Searching.js"></script>
 <script type="module" src="Insertion.js"></script>
 <script type="module" src="Deletion.js"></script>
-<script type="module" src="Reward.js"></script>
-<script type="module" src="Expanding.js"></script>
+<script type="module" src="Database.js"></script>
+
+<!-- Sandbox scenes -->
+<script type="module" src="SandboxMenu.js"></script>
+<script type="module" src="SandboxBST.js"></script>
+<script type="module" src="SandboxRB.js"></script>
+
+<!-- RB scenes -->
+<script type="module" src="AboutRB.js"></script>
+<script type="module" src="FlipColors.js"></script>
+<script type="module" src="RotateLeft.js"></script>
+<script type="module" src="RotateRight.js"></script>
+<script type="module" src="InsertLarger.js"></script>
+<script type="module" src="InsertSmaller.js"></script>
+<script type="module" src="InsertBetweenNodes.js"></script>
+<script type="module" src="InsertLargeTree.js"></script>
+<script type="module" src="RewardRB.js"></script>
+
+<script type="module" src="Input.js"></script>
 
 
 <script type="module" src="game.js"></script>

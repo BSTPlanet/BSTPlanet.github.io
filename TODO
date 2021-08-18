@@ -14,20 +14,12 @@ update tasks for Searching and Insertion  - DONE
 update MenuBST - pass tasks to deletions, add about and reward scenes  - DONE
 enable ESC to be able to go back to menu from the learning scenes  - DONE
 
-Ugu:
-compare Insertion.js with InsertionLinked.js - DONE
-add scenes for panels - DONE
-code the panels to show task and feedback and level (send info from level scene to panel scene) MAKE CONTAINERS
-make curtain graphics (kind of 3d node)
-make backgrounds with planets (can tween them so they would look like floating) (add a comet falling? with particles)
-
 All:
 review explanations
 write && review the stories (say what the bst and rb-bst stands for, explain the locked level)
 explanations about the links
 plan how to do and code About level
 plan how to do and code Reward level
-decide about the zooming
 
 Explanations:
 keep important words in bold, for ABOUT level match the colours of the elements and the word in the text
@@ -35,14 +27,35 @@ keep important words in bold, for ABOUT level match the colours of the elements 
 make static highlichts at the tree (everything is already highlighted and stays highlighted), 
 or coordinate with the text and make dynamic (appears and disappears)
 
+Ugu:
+compare Insertion.js with InsertionLinked.js - DONE
+add scenes for panels - DONE
+make curtain graphics (kind of 3d node) - DONE
+make nodes for the reward level - 791, 129 - DONE
+make selector/highlight for the nodes - DONE
+make backgrounds with planets (can tween them so they would look like floating) (add a comet falling? with particles)
+code the panels to show task and feedback and level (send info from level scene to panel scene) MAKE CONTAINERS
+make graphics for showing the player's reward
 
-***!!!need a different method of starting scenes in MenuBST!!!***
-fix loading of assets
-actually LOCK the Reward level (booleans)
-press SPACEBAR to go to next level (need to lock so that the user cannot press and go to next level during the level)
-
+Zooming
 STORY popups on title page, learn page and play page
 add scene for expert alien (alienTalk("insert");)
+HOLOGRAM alien with hologram text
+merge panels like so [  |  ]
+teleporting sprite animation (spriteSheet)
+more visible feedback
+
+in deletion animation make the links move with the branch
+reward presentation/display
+teleporting animation
+big positive feedback (falling comet?)
+loading screens
+CANVAS SIZE
+fix loading of assets - DONE
+need a different method of starting scenes in MenuBST - DONE
+actually LOCK the Reward level (booleans) - DONE
+press SPACEBAR to go to next level (need to lock so that the user cannot press and go to next level during the level) - DONE
+
 make working BST levels (on failure popup for video, on success alien talks)
 
 fix the graphics (the colours, brigthness, contrast, sizes)
@@ -62,6 +75,34 @@ Extras:
 combo/ on a strike - like 10 operations in a row without a mistake
 make the talking alien blink, maybe facial expressions?
 
+After meeting with Radu 07/08:
+
+leaderboard with firebase? that show 10 best scores of all time
+hologram expett alien at the side of the screens
+two tasks per level
+guided task by expert, other diy
+
+shaking tree (swayed by the wind)
+expert sends/uploads a book to the alien's computer, expert says take this to learn and I will also help you/guide you
+macro operations to micro operations
+darken the screen to highlight the stuff that the expert is doing
+teleportation animations
+
+terminal:
+    has commands that user can enter for swaping nodes and drawing links
+    commands in the terminal:
+        help
+        keyboard
+        link (verb - link the nodes)
+        swap (swap the nodes)
+        overwrite (null to key when inserting, key to null?)
+
+overwrite - insert 
+swap
+link
+create children
+
+----------------
 Old todo:
 collide for curtain only with node
 edit revealValue
@@ -70,10 +111,15 @@ put all colliders and overlaps in a general reusable function - KIND OF DONE?
 destroy all the physics bodies of the nodes
 how to close the curtain, the one we stand on, after we press enter for search (line 249) - FIXED?
 
-
 ----------------------------------
 Notes: 
 
+In Panel and ExperAlien there were problems were when a function of these scenes is called in other scene,
+(for example searching or insertion) then it would say some elements of Panel or Expert are undefined, as if thei were not loaded yet?
+For some reason when I moved all of the loading of assets from Panel and ExpertAlien to the TitlePage that fixed the problem.
+Maybe cuz assets slow down the loading of the whole scene?
+
+*****
 Why it would not make sense to use SVG in Phaser 3:
 
 Caveats might be that it turns it into a regular image at load time. 

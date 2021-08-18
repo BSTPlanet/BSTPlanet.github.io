@@ -2,11 +2,17 @@ import { Tree } from './Tree.js';
 import { NodeBST } from './NodeBST.js';
 import { Panel } from './Panel.js';
 import { ExpertAlien } from './ExpertAlien.js';
+import { HelpBubble } from './HelpBubble.js';
 
-var panel = null;
-var expert = null;
+var panel;
+var expert;
 var tasks;
 var numsToInsert;
+var singleTon;
+var data;
+var controls;
+var gotoRB;
+const node_400 = {x:935, y:813, name: "node_400"}
 
 export class Insertion extends Phaser.Scene {
 
@@ -14,104 +20,89 @@ export class Insertion extends Phaser.Scene {
         super({ key:'Insertion' });
     }
 
-    init (data) {
+    init (data1) {
         tasks = [];
         numsToInsert = [];
-        numsToInsert = data.tree
-        tasks.push(data.task)
-        console.log("Task: " + data.task)
+        singleTon = data1.singleTon
+        numsToInsert = data1.tree
+        tasks = [...data1.task]
+        data = data1;
     }
 
     preload() {
-        // this.load.image('onion', 'Assets/onion.png');
-        this.load.image('background', 'Assets/background_planet_beige_singleLarge.png');
-        this.load.image('onion', 'Assets/alien_pink.png');
-        this.load.image('node_yellow', 'Assets/node_yellow_scaled.png'); // yellow node
-        this.load.image('node_curtain', 'Assets/node_curtain.png'); // yellow node curtain
-        this.load.image('node_null', 'Assets/node_null_scaled.png'); // gray node null
+        // *************INIT HELP BUBBLE*************
+        this.scene.remove('HelpBubble_keyboard');
+        this.helpBubble_key = 'HelpBubble_keyboard';
+        this.helpBubble_scene = new HelpBubble('HelpBubble_keyboard');
+        this.helpBubble = this.scene.add(this.helpBubble_key, this.helpBubble_scene, true);
+        this.helpBubble.setHelp('keyboard_BST');
 
         // *************INIT PANEL AND EXPERT*************
-        if (panel == null) {
-            panel = this.scene.add('Panel', Panel, true);
-        } else {
-            this.scene.restart('Panel');
-        }
+        this.scene.remove('Panel');
+        this.scene.remove('ExpertAlien');
+        panel = this.scene.add('Panel', Panel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
+        panel.setLevelName('BST Insertion');
+        if(tasks[0] == 97){
+            expert.talk('reward',0,'close');
+        } else {
+            expert.talk('insert',0,'continue');
+        }
     }
 
     create() {
+
+        gotoRB = false;
+
+        // create the nodes for the reward level
+        panel.loopOverNodes(singleTon.nodeSet)
+        panel.loopOverTools(singleTon.toolSet)
 
         // *************VARIABLES*************
         // Used to offset y of player so that it does not fall off the node during setPosition
         const BUFFER = 90;
 
-        var nodetoreturn = null;
-
         // *************SCENE SPECIFIC CODE*************
 
-        this.add.image(10_000,750,'background').setDepth(-1);
-
-        // Text on top of the game world
-        // var text1 = this.add.text(9_000,100, 'INSERTION BST', { fontSize: '30px', fill: '#000' });
-        //Instructions
-        // var text2 = this.add.text(10_300,100, 'Instructions: press ENTER to insert', { fontSize: '20px', fill: '#000' });
-
-         // Clafifications on the Insert Operation
-        //  var text3 = this.make.text({
-        //     x: 2700,
-        //     y: 1000,
-        //     text: 'You always start searching from the root. To find a key in the tree you have to compare it with the root key and go left if it’s smaller or go right if it’s bigger than the root key. You have to repeat this step until the key of node you are on is equal to the key you’re looking for - that’s when you stop and delete (press BACKSPACE). Sometimes the delete operation is more complicated than that - if the node you’re deleting has two children, you need to replace the deleted node with the leftmost node in the right subtree of the deleted node. In this case you’ll be asked to show which node should replace the node you want to delete (by pressing ENTER).',
-        //     origin: { x: 0.5, y: 0.5 },
-        //     style: {
-        //         fontSize:'28px ',
-        //         fill: 'black',
-        //         align: 'justify',
-        //         wordWrap: { width: 1600 }
-        //     },
-        // });
-
-        // var text4 = this.add.text(2300,1130, 'To go back to the home page press ESC', { fontSize: '30px', fill: '#000' });
-
-        // Go back to the home page
-        // var keyEscape = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-        // keyEscape.on('down', () => {
-        //     this.scene.switch('BSTIntroduction');
-        // });
-
-        // Switches from this scene to InsertionLinked
-        // var spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        // spacebar.on('down', () => {
-        //     this.scene.stop('Sandbox');
-        //     this.scene.start('SearchLinked');
-        // });
+        this.add.image(10_000,750,'background_planet_raisin').setDepth(-1);
 
         var spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         spacebar.on('down', () => {
-            this.scene.switch('IncorrectBST');
-        });
-
-         // Restart the current scene
-        var keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        keyR.on('down', () => {
-            destroyEverything();
-            // this.scene.restart('Insertion');
-            this.scene.restart('Insertion', {task: 400, tree: [879, 384, 181, 509, 580, 978, 595, 219]});
-            // this.scene.restart('ExpertAlien');
-            // this.scene.restart('Panel');
-            this.input.keyboard.removeAllKeys(true);
+            if (gotoRB) {
+                this.scene.stop('Panel');
+                this.scene.stop('ExpertAlien');
+                this.scene.stop('HelpBubble_keyboard');
+                this.scene.stop();
+                this.scene.run('MenuRB',singleTon);
+            } else if(tasks.length == 0 && data.task.length != 7 ) {
+                this.scene.stop('Panel');
+                this.scene.stop('ExpertAlien');
+                this.scene.stop('HelpBubble_keyboard');
+                this.scene.stop();
+                this.scene.launch("Deletion",{task: singleTon.deleteMinTasks, tree: singleTon.deleteMinTree, singleTon:singleTon, levelName: 'BST Delete min'});
+                destroyEverything();
+                this.input.keyboard.removeAllKeys(true);
+            } else if (expert.talking == false) {
+                expert.talking = true;
+                if (expert.progressCounter == 1 && tasks[0] == 600) {
+                    expert.talk('insert',1,'close');
+                }
+            }
         });
 
         var keyEscape = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         keyEscape.on('down', () => {
-            // destroyEverything();
-            // this.scene.stop('Insertion');
-            this.scene.sleep('Panel');
-            this.scene.sleep('ExpertAlien');
-            this.scene.switch('MenuBST');
+            destroyEverything();
+            this.scene.stop('Panel');
+            this.scene.stop('ExpertAlien');
+            this.scene.stop('HelpBubble_keyboard');
+            this.scene.stop();
+            this.scene.wake('MenuBST')
+            this.input.keyboard.removeAllKeys(true);
         });
 
         // *************PLAYER*************
-        var player = this.physics.add.sprite(10_000, 300, 'onion');
+        var player = this.physics.add.sprite(10_000, 100, 'onion');
         player.setBounce(0.1);
 
         // *************KEYBOARD*************
@@ -120,36 +111,37 @@ export class Insertion extends Phaser.Scene {
         var cursors = this.input.keyboard.createCursorKeys();
 
         var keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-        var keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-
-        var keybackspace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.BACKSPACE);
 
         // *************CAMERA AND ZOOM*************
-        this.cameras.main.setBounds(0, 0, 20_000, 20_000);
-        // this.cameras.main.startFollow(player, true, 0.08, 0.08);
-        // this.cameras.main.centerOn(2700,500);
-        this.cameras.main.zoom = 0.7;
+        var keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        var keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        var keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        var keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        var keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        var keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
+        controls = new Phaser.Cameras.Controls.SmoothedKeyControl({
+            camera: this.cameras.main,
+        
+            left: keyA,
+            right: keyD,
+            up: keyW,
+            down: keyS,
+            zoomIn: keyQ,
+            zoomOut: keyE,
+        
+            zoomSpeed: 0.01,
+            minZoom: 0.3,
+            maxZoom: 2,
+        
+            acceleration: 2,
+            drag: 3,
+            maxSpeed: 2
+        });
+
+        this.cameras.main.setBounds(0,0, 20_000, 20_000);
         this.cameras.main.startFollow(player, true, 0.05, 0.05);
-
-        // var isZoomed = true;
-        // var keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        // keyZ.on('down', function () {
-        //     var cam = this.cameras.main;
-        //     if(isZoomed) {  // zoom out
-        //         cam.stopFollow();
-        //         cam.pan(root.x, root.y, 2000, 'Power2'); //x to pan to, y to pan to, pan speed?, pan mode
-        //         cam.zoomTo(0.5, 1000);//zoom distance, duration/speed of zoom
-        //         isZoomed = false;
-        //     } else { // zoom in
-        //         cam.startFollow(player, true, 0.05, 0.05);
-        //         // cam.pan(player.x, player.y, 2000, 'Power2'); //x to pan to, y to pan to, pan speed?, pan mode
-        //         cam.zoomTo(1, 1000);//zoom distance, duration/speed of zoom
-        //         isZoomed = true;
-        //     }
-        // }, this);
-
-        // this.cameras.world.setBounds(0, 0, 600, 2000);
-        // player.setCollideWorldBounds(true);
+        this.cameras.main.zoom = 0.7;
 
         // ************* NUMBERS TO INSERT *************
         // Array of nodes to be inserted into BST automatically by insertNodes
@@ -159,50 +151,50 @@ export class Insertion extends Phaser.Scene {
         
         // GENERATE RANDOM
         // var numsToInsert = generateNumsToInsert(30);
-        console.log(numsToInsert);
+        // console.log(numsToInsert);
 
-        function generateNumsToInsert(n) {
-            var arr = [];
-            var i;
-            for(i=0;i<n;i++){
-                var number = Math.floor(Math.random() * (999 - 1) + 1);
-                if(!arr.includes(number)){
-                    arr.push(number);
-                }
-            }
-            return arr;
-        }
+        // function generateNumsToInsert(n) {
+        //     var arr = [];
+        //     var i;
+        //     for(i=0;i<n;i++){
+        //         var number = Math.floor(Math.random() * (999 - 1) + 1);
+        //         if(!arr.includes(number)){
+        //             arr.push(number);
+        //         }
+        //     }
+        //     return arr;
+        // }
 
-        function generateNumsForInsertTask(n) {
-            var arr = [];
-            var i;
-            for(i=0;i<n;i++){
-                var number = Math.floor(Math.random() * (999 - 1) + 1);
-                if(!arr.includes(number) && !numsToInsert.includes(number)){
-                    arr.push(number);
-                }
-            }
-            return arr;
-        }
+        // function generateNumsForInsertTask(n) {
+        //     var arr = [];
+        //     var i;
+        //     for(i=0;i<n;i++){
+        //         var number = Math.floor(Math.random() * (999 - 1) + 1);
+        //         if(!arr.includes(number) && !numsToInsert.includes(number)){
+        //             arr.push(number);
+        //         }
+        //     }
+        //     return arr;
+        // }
         
         // *************INITIALIZE BST*************
 
-        var tree = new Tree(this);
+        var tree = new Tree(singleTon.insertColor,this);
         // BST (intially an empty/null root node)
         tree.createRoot(this);
         tree.createTree(numsToInsert,this);
         setPhysicsTree(tree.root,this);
-        // tree.root.left.drawLinkToParentRB(this);
-
 
         function setPhysicsTree(node,scene) {
             if (node != null) {
+                // specific to insert explanation
+                scene.physics.add.overlap(player, node, triggerExplanation, null, scene);
+
                 // teleporting + curtains
                 node.setPhysicsNode(cursors,player,scene);
                 // checks
                 scene.physics.add.overlap(player, node, checkInsertion, enterIsPressed, scene);
-                // redraw
-                // scene.physics.add.overlap(node, tree.nodearray, redrawTree, null, scene);
+
                 // to stand on the node
                 scene.physics.add.collider(player, node);
 
@@ -210,54 +202,56 @@ export class Insertion extends Phaser.Scene {
                 setPhysicsTree(node.right,scene);
             }
         }
-
-        // function redrawTree(node) {
-        //     tree.checkCollisions(node);
-        //     tree.redraw(this);
-        // }
         
         
        // *************** TASKS + TASK ACTIONS ***************
 
-        // elements to delete, one-by-one
-        // var tasks = ['Min',48,'Max'];
-        // var tasks = [99,6,3,1,42,48,25,7,9,8,0];
-        // var tasks = [99,99,99,99,99,99,99,99,99,99]
-        // var tasks = [473, 236, 346, 213, 182, 75, 175, 290];
-        // var tasks = [408, 613, 779, 957, 813, 330, 461, 110, 695, 768]
-        // var tasks = [33,1,14,5,17,16,55,50,70,48,53,60,80,3,77];
-        // var tasks = generateNumsForInsertTask(2);
-
-        // // displays what operations needs to be performed by the player
-        var taskText = this.add.text(10_000,175, '', { fontSize: '22px', fill: '#000' });
         displayTask();
-        // // for displaying feedback after completing tasks
-        var feedback = this.add.text(10_000,150, '', { fontSize: '20px', fill: '#000' });
 
-        // //while there are still some tasks in the array, displays text indicating what needs to be done
-        // //when tasks is empty then press P to continue to next lesson
+        //while there are still some tasks in the array, displays text indicating what needs to be done
         function displayTask() {
             if (tasks.length != 0) { 
-                // taskText.setText('Insert ' + tasks[0]);
                 panel.refreshTask('Insert ' + tasks[0]);
             } else {
-                // taskText.setText('You did it!!! You did the thing!!!!'); 
-                // taskText.setPosition(9000,1100);
-                // taskText.setFill('#ff0062');
-                // taskText.setFontSize(80);
-                // panel.refreshTaskDone('You are done!\nPress SPACEBAR to learn deletion!');
-                panel.refreshTaskDone('refresh the page to restart this level');
+                panel.allTasksDone();
+                if (expert.progressCounter == 4) {
+                    expert.talk('insert',4,'continue');
+                }
+                // TODO:
+                // if (the level is reward) {
+                //     when all tasks are done - display reward popup
+                //     then tell player to go back to menu and learn rb bst
+                // } else {
+                //     panel.allTasksDone();
+                // }
+                if (singleTon.nodeSet.size == 7 && data.task.length == 7) {
+                    if (tasks.length == 0) {
+                        singleTon.addTool({x:1320, y:833, name: "wrench"});
+                        gotoRB = true;
+                        panel.task.setText('Press SPACEBAR to go to RB-BST levels!')
+                        panel.displayRewardBST();
+                    }
+                }
             }
         }
 
         function taskSucceededActions(scene) {
             player.setPosition(tree.root.x,tree.root.y-BUFFER);
+            tree.closeCurtains();
+            singleTon.updateSet(tasks[0]);
+            if (tasks[0] == 600) {
+                expert.talk('insert',3,'close');
+            }
+            if (tasks[0] == 400 && !(singleTon.nodeSet.has(node_400))) {
+                singleTon.addNode(node_400)
+                panel.rewardNodeActions(400);
+            }
+            // disappear the nodes after inserion in the reward level
+            if(singleTon.nodeSet.size == 7 && data.task.length == 7 ) {
+                var node = tasks[0]
+                panel.destroyNode(node)
+            }
             tasks.shift();
-            // feedback.setPosition(2000,150);
-            // feedback.setText('Good job!!!');
-            // displayTask(scene);
-            // tree.calculateHeight();
-            // tree.closeCurtains();
         }
 
         var enterAllowed = false;
@@ -281,15 +275,12 @@ export class Insertion extends Phaser.Scene {
             if (tasks.length != 0) {
                 if (node.key == 'null') {
                     if (node == nodeThatPlayerStandsOn) {
-                        // insert(nodeThatPlayerStandsOn,scene);
                         insert(player,nodeThatPlayerStandsOn,scene);
-                        // taskSucceededActions(this);
-                        // tree.closeCurtains();
                         panel.greenFeedback('GOOD JOB!');
                     } else {
-                        // feedback.setText('Try again');
                         panel.redFeedback('TRY AGAIN');
                         player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        tree.closeCurtains();
                     }
                 } else if (node.key > tasks[0]) {
                     checkInsertionH(node.left,nodeThatPlayerStandsOn,player,scene);
@@ -298,7 +289,7 @@ export class Insertion extends Phaser.Scene {
                 }
             } else {
                 player.setPosition(tree.root.x,tree.root.y-BUFFER);
-                // tree.closeCurtains();
+                tree.closeCurtains();
             }
         }
 
@@ -309,13 +300,15 @@ export class Insertion extends Phaser.Scene {
                 node.curtain.setVisible(false);
 
                 // create left child
-                var childL = new NodeBST(scene, node.posX-tree.w, node.posY+tree.z, 'null',node.dpth+1,node);
+                var childL = new NodeBST(scene, singleTon.insertColor, node.posX-tree.w, node.posY+tree.z, 'null',node.dpth+1,node);
                 childL.distanceFromParent = -tree.w;
+                childL.drawLinkToParent(scene);
                 tree.nodearray.push(childL);
 
                 // create right child
-                var childR = new NodeBST(scene, node.posX+tree.w, node.posY+tree.z, 'null',node.dpth+1,node);
+                var childR = new NodeBST(scene, singleTon.insertColor, node.posX+tree.w, node.posY+tree.z, 'null',node.dpth+1,node);
                 childR.distanceFromParent = tree.w;
+                childR.drawLinkToParent(scene);
                 tree.nodearray.push(childR);
 
                 node.setChildren(childL,childR);
@@ -331,12 +324,9 @@ export class Insertion extends Phaser.Scene {
                 scene.physics.add.overlap(player, childL, checkInsertion, enterIsPressed, scene);
                 scene.physics.add.overlap(player, childR, checkInsertion, enterIsPressed, scene);
 
+                // to stand on the node
                 scene.physics.add.collider(player, childL);
                 scene.physics.add.collider(player, childR);
-                // redraw
-                // scene.physics.add.overlap(childL, tree.nodearray, redrawTree, null, scene);
-                // scene.physics.add.overlap(childR, tree.nodearray, redrawTree, null, scene);
-                // to stand on the node
             
                 // update depth of the tree
                 if (childL.dpth > tree.treedpth) {
@@ -345,7 +335,8 @@ export class Insertion extends Phaser.Scene {
 
                 tree.traverseAndCheckCollisions(scene);
                 tree.traverseAndCheckCrossings(tree.root,scene);
-                tree.redraw(scene);
+                // tree.redraw(scene);
+                tree.redrawTweened(scene);
 
                 // PLAY 'BACKSTREET BOYS - TELL ME WHY' HERE
 
@@ -368,7 +359,7 @@ export class Insertion extends Phaser.Scene {
                 scene.add.tween({
                     targets: [node.nodeGraphics, node.keyString, node.curtain, childL.nullGraphics, childL.keyString, childL.link, childR.nullGraphics, childR.keyString, childR.link],
                     ease: 'Sine.easeIn',
-                    duration: 1000,
+                    duration: 1500,
                     alpha: "+=1"
                 });
                 
@@ -384,29 +375,32 @@ export class Insertion extends Phaser.Scene {
             }
         }
 
+        // *************** INSERT EXPLANATION ***************
+
+        var talkNodes = [595];
+        function triggerExplanation(player,node) {
+            if(node.parent != null) {
+                if(talkNodes[0] == 595 && node.key == 'null' && node.parent.key == talkNodes[0] && node == node.parent.right && expert.progressCounter == 2) {
+                    expert.talk('insert',2,'nosymbol');
+                    talkNodes.shift();
+                }
+            }
+        }
+
         // ***************DESTROY***************
 
         function destroyEverything() {
             // destroy tree and nodes
             tree.destroyTree();
 
-            // panel.destroy();
-            // expert.destroy();
-
             // destroy everything in the scene (text, player, keyboard)
             player.destroy();
-            // text1.destroy();
-            // text2.destroy();
-            // text3.destroy();
-            // text4.destroy();
-            feedback.destroy();
-            taskText.destroy();
             tasks = null;
             numsToInsert = null;
         }
     }
 
-    update() {
-
+    update(time,delta) {
+        controls.update(delta);
     }
 }

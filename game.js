@@ -1,36 +1,44 @@
-// const gameState = {
-
-// }
+import { StoryBegin } from './StoryBegin.js';
 import { TitlePage } from './TitlePage.js';
 import { LearnPage } from './LearnPage.js';
 import { MenuBST } from './MenuBST.js';
 import { MenuRB } from './MenuRB.js';
+import { SandboxMenu } from './SandboxMenu.js';
+import { SandboxBST } from './SandboxBST.js';
+import { SandboxRB } from './SandboxRB.js';
 import { Play } from './Play.js';
-import { RB } from './RB.js';
-import { Sandbox } from './Sandbox.js';
 import { About } from './About.js';
-import { IncorrectBST } from './IncorrectBST.js';
-import { SearchLinked } from './SearchLinked.js';
-import { InsertionLinked } from './InsertionLinked.js';
-import { DeleteLinked } from './DeleteLinked.js';
 import { Searching } from './Searching.js';
 import { Insertion } from './Insertion.js';
 import { Deletion } from './Deletion.js';
-import { Reward } from './Reward.js';
-import { Expanding } from './Expanding.js';
+import { Database } from './Database.js';
+
+import {AboutRB} from './AboutRB.js';
+import {FlipColors} from './FlipColors.js';
+import {RotateLeft} from './RotateLeft.js';
+import {RotateRight} from './RotateRight.js';
+import {InsertSmaller} from './InsertSmaller.js';
+import {InsertLarger} from './InsertLarger.js';
+import {InsertBetweenNodes} from './InsertBetweenNodes.js';
+import {InsertLargeTree} from './InsertLargeTree.js';
+import {RewardRB} from './RewardRB.js';
+
+import { Input } from './Input.js';
+
 
 var config = {
 
-    type: Phaser.AUTO, //canvas or WebGL
-    // #FFFFFF
-    // #f2e5d7 mix1
-    backgroundColor: '#e4f5e8',
+    type: Phaser.AUTO,  //canvas or WebGL
+    parent: 'input-form' , 
+    backgroundColor: '#00506e',
     width: 1600,
     height: 912,
-    // width: 800,
-    // height: 600,
+    dom: {
+        createContainer: true
+    },
     scale: {
         mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
         default: 'arcade',
@@ -39,13 +47,7 @@ var config = {
             // debug: true
         }
     },
-    scene: [TitlePage, LearnPage, MenuBST, MenuRB, RB, Play, Sandbox, About, IncorrectBST, SearchLinked, InsertionLinked, DeleteLinked, Searching, Insertion, Deletion, Reward, Expanding],
-    // scene: {
-    //     preload: preload,
-    //     create: create,
-    //     update: update
-    // },
-    // pixelArt: true
+    scene: [StoryBegin, TitlePage, LearnPage, MenuBST, MenuRB, SandboxMenu, SandboxBST, SandboxRB, Play, About, Searching, Insertion, Deletion, Database, AboutRB, FlipColors, RotateLeft, RotateRight, InsertSmaller, InsertLarger, InsertBetweenNodes, InsertLargeTree, RewardRB, Input]
 };
 
 var game = new Phaser.Game(config);
