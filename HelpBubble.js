@@ -11,7 +11,7 @@ export class HelpBubble extends Phaser.Scene {
 
         // create help bubble at the corner of the screen
         this.help_bubble = this.add.image(1545,860,'help_bubble').setScale(0.5);
-        this.help_bubble_selector = this.add.image(1545-4,860-4,'help_bubble_selector').setScale(0.5).setVisible(false);
+        this.help_bubble_selector = this.add.image(1545-4,860-4,'help_bubble_selector').setScale(0.5);
 
         // create container of the popup
         this.popup_container;
@@ -30,7 +30,7 @@ export class HelpBubble extends Phaser.Scene {
         // this.explainButtons = this.add.text(470,500, 'ENTER\nARROWS\nESC\nBACKSPACE\nP\nSPACEBAR', { fontFamily: 'nasalization-rg', fontSize: '30px', fill: '#ffffff', align: 'justify', wordWrap: { width: 760, useAdvancedWrap: true }});
 
         // '?' (question mark) key logic
-        this.switcharoo = 0;
+        this.switcharoo = 1;
         // use this key also in game mode
         this.keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
         this.keyH.on('down', () => {
@@ -177,6 +177,6 @@ export class HelpBubble extends Phaser.Scene {
     
     setupContainer() {
         var container_children = [this.window,this.explanation,this.keyboardText,this.keyboardImg,this.img,this.keyH_img];  //,this.closeText
-        this.popup_container = this.add.container(800,600,container_children).setVisible(false);
+        this.popup_container = this.add.container(800,600,container_children);
     }
 }
