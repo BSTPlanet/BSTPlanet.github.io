@@ -36,7 +36,7 @@ export class SandboxBST extends Phaser.Scene {
         this.scene.remove('ExpertAlien');
         panel = this.scene.add('SandboxPanel', SandboxPanel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
-        panel.setLevelName('BST Sandbox');
+        panel.setLevelName('Practice BST');
     }
 
     create() {

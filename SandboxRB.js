@@ -31,7 +31,7 @@ export class SandboxRB extends Phaser.Scene {
         this.scene.remove('ExpertAlien');
         panel = this.scene.add('SandboxPanel', SandboxPanel, true);
         expert = this.scene.add('ExpertAlien', ExpertAlien, true);
-        panel.setLevelName('RB Sandbox');
+        panel.setLevelName('Practice RB');
     }
 
     create() {
@@ -130,6 +130,9 @@ export class SandboxRB extends Phaser.Scene {
 
         // var numsToInsert = [536, 877, 115, 428, 260, 122, 782, 397, 797, 237]
         // var tasks = [527,786,862]
+
+        // too expanded tree
+        // var numsToInsert = [531,392,751,498,247,788,715,320,257];
 
         var numsToInsert = generateNumsToInsert(Math.floor(Math.random() * 10));
         var tasks = generateNumsForInsertTask(10);
@@ -258,7 +261,18 @@ export class SandboxRB extends Phaser.Scene {
 
         function taskSucceededActions() {
             player.setPosition(tree.root.x,tree.root.y-BUFFER);
-            tasks.shift();
+            if(tree.checkCorrectnessRBTree(tree.root)) {     // if RB tree is correct
+                tasks.shift();
+                displayTask();
+            } else {                                         // if RB tree is NOT correct yet
+                // panel says that the RB tree needs to be corrected
+                panel.refreshTask('Fix the tree!'); 
+            }
+            tree.setvarToReturnToDefault(); 
+
+            // old version:
+            // player.setPosition(tree.root.x,tree.root.y-BUFFER);
+            // tasks.shift();
         }
 
         // ************** INSERTION ***************
@@ -272,7 +286,8 @@ export class SandboxRB extends Phaser.Scene {
                 if (node.key == 'null') {
                     if (node == nodeThatPlayerStandsOn) {
                         insert(player,nodeThatPlayerStandsOn,scene);
-                        panel.greenFeedback();
+                        // panel.greenFeedback();
+                        taskSucceededActions();
                     } else {
                         panel.redFeedback();
                         player.setPosition(tree.root.x,tree.root.y-BUFFER);
@@ -308,13 +323,13 @@ export class SandboxRB extends Phaser.Scene {
                 node.changeLinkColour(scene);
 
                 // create left child
-                var childL = new NodeBST(scene, singleTon.redBlackColor, node.posX-tree.w, node.posY+tree.z, 'null',node.dpth+1,node,true);
+                var childL = new NodeBST(scene, singleTon.redBlackColor2, node.posX-tree.w, node.posY+tree.z, 'null',node.dpth+1,node,true);
                 childL.distanceFromParent = -tree.w;
                 tree.nodearray.push(childL);
                 childL.drawLinkToParentRB(scene);
 
                 // create right child
-                var childR = new NodeBST(scene, singleTon.redBlackColor, node.posX+tree.w, node.posY+tree.z, 'null',node.dpth+1,node,true);
+                var childR = new NodeBST(scene, singleTon.redBlackColor2, node.posX+tree.w, node.posY+tree.z, 'null',node.dpth+1,node,true);
                 childR.distanceFromParent = tree.w;
                 tree.nodearray.push(childR);
                 childR.drawLinkToParentRB(scene);
@@ -377,8 +392,8 @@ export class SandboxRB extends Phaser.Scene {
                 scene.time.addEvent({
                     delay: 1000,
                     callback: function(scene) {
-                        taskSucceededActions();
-                        displayTask(scene);
+                        // taskSucceededActions();
+                        // displayTask(scene);
                         scene.input.keyboard.enabled = true;
                     },
                     args: [scene]
@@ -570,7 +585,9 @@ export class SandboxRB extends Phaser.Scene {
                         scene.input.keyboard.enabled = true;
 
                         // do panel and task stuff here
-                        player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        // player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        taskSucceededActions();
+
                         tree.redrawTweened(scene);
                     },
                     args: [this]
@@ -752,7 +769,8 @@ export class SandboxRB extends Phaser.Scene {
                         // ENABLE KEYBOARD
                         scene.input.keyboard.enabled = true;
                         // do panel and task stuff here
-                        player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        // player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        taskSucceededActions();
                         // tree.updateDistances(node.left.left.left,node.left.left.left.right.posX);
                         tree.redrawTweened(scene);
                     },
@@ -797,6 +815,14 @@ export class SandboxRB extends Phaser.Scene {
                 node.right.isRed = false;
                 node.left.drawLinkToParentRB(this);
                 node.right.drawLinkToParentRB(this);
+
+                this.time.addEvent({
+                    delay: 1000,
+                    callback: function() {
+                        taskSucceededActions();
+                    },
+                    args: []
+                });
             }
         }
 
