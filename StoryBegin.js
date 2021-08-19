@@ -91,7 +91,7 @@ export class StoryBegin extends Phaser.Scene {
         // Characters
         this.load.image('onion', 'Assets/Characters/alien_pink.png');
         this.load.image('expert_hologram3', 'Assets/Characters/alien_expert3.png');
-        this.load.image('alien_dialogue', 'Assets/Characters/alien_dialogue.png');
+        // this.load.image('alien_dialogue', 'Assets/Characters/alien_dialogue.png');
         this.load.image('dialogue_planet', 'Assets/Characters/dialogue_planet.png');
         this.load.image('alf_takeoff', 'Assets/Characters/alf_takeoff.png');
 

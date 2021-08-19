@@ -1,6 +1,7 @@
 import { Tree } from './Tree.js';
 import { Panel } from './Panel.js';
 import { ExpertAlien } from './ExpertAlien.js';
+import { HelpBubble } from './HelpBubble.js';
 
 var numsToInsert;
 var nodeSet;

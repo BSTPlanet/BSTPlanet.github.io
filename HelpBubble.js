@@ -61,7 +61,7 @@ export class HelpBubble extends Phaser.Scene {
             case 'title':
                 // init container stuff
                 this.keyboardImg = this.add.image(0,-330, 'keyboard_menu');
-                this.keyboardText = this.add.text(-450,-500, 'The KEYBOARD will be your tool.\nUse the ARROW KEYS, ENTER, ESC and \'?\' key to navigate the menu.', { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#ffffff', align: 'center', wordWrap: { width: 1500, useAdvancedWrap: true }});
+                this.keyboardText = this.add.text(-450,-500, 'The KEYBOARD will be your tool.\nUse the ARROW KEYS, ENTER, ESC and H key to navigate the menu.', { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#ffffff', align: 'center', wordWrap: { width: 1500, useAdvancedWrap: true }});
                 var text = 'Help Alf to collect his tools and spaceship parts!\n\n\nIn Learn you will learn about the Binary Search Trees (BST) and Left-Leaning Red-Black Binary Search Trees (RB-BST). Complete these levels to find Alf’s wrench and screwdriver, which he will use to fix the spaceship.\n\n\n\n\nIn Play you will test your knowledge of BSTs and RB-BSTs. Complete the game to find Alf’s spaceship and the assembly guide of the spaceship!\n\n\n\n\nYou are free to skip the Learn levels and just jump straight into Play!';
                 
                 this.explanation = this.add.text(-580,-190, text, { fontFamily: 'nasalization-rg', fontSize: '25px', fill: '#ffffff', align: 'justify', wordWrap: { width: 900, useAdvancedWrap: true }});
