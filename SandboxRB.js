@@ -103,7 +103,7 @@ export class SandboxRB extends Phaser.Scene {
         });
 
         this.cameras.main.setBounds(0,0, 20_000, 10_000);
-        this.cameras.main.startFollow(player, true, 0.05, 0.05);
+        this.cameras.main.startFollow(player, true, 0.1, 0.1);
         this.cameras.main.zoom = 0.6;
 
         // *************KEYBOARD*************

@@ -247,6 +247,7 @@ export class Play extends Phaser.Scene {
                     this.keybackspace.enabled = true;
                     tree.destroyTree();
                     makeTree(this,true,0,40);
+                    this.cameras.main.startFollow(player, true, 0.1, 0.1);
                     panel.setLevelName('RB');
                     panel.resetPoints();
                     panel.resetTimer(this.time);
