@@ -83,7 +83,7 @@ export class InsertLargeTree extends Phaser.Scene {
                         tree.destroyTree();
                         makeRBTree(data.tree[1],this);
                         displayTask();
-                        expert.talk('insertLargeTree',5,'close');
+                        expert.talk('insertLargeTree',5,'nosymbol');
                     }
                 // }
             }           
@@ -207,22 +207,35 @@ export class InsertLargeTree extends Phaser.Scene {
 
         function taskSucceededActions() {
             player.setPosition(tree.root.x,tree.root.y-BUFFER);
-            if(tree.checkCorrectnessRBTree(tree.root)) {     // if RB tree is correct
-                panel.greenFeedback();
-                singleTon.updateSetRB(tasks[0]);
-                if (tasks[0] == 210 && !(singleTon.nodeSetRB.has(node_210))) {
-                    singleTon.addNodeRB(node_210)
-                }
-                tasks.shift();
-                if (tasks.length == 0) {
-                    panel.allTasksDone();
-                }
-            } else {                                         // if RB tree is NOT correct yet
-                // panel says that the RB tree needs to be corrected
-                panel.refreshTask('Fix the tree!'); 
+            panel.greenFeedback();
+            singleTon.updateSetRB(tasks[0]);
+            if (tasks[0] == 210 && !(singleTon.nodeSetRB.has(node_210))) {
+                singleTon.addNodeRB(node_210)
             }
-            tree.setvarToReturnToDefault(); 
+            tasks.shift();
+            if (tasks.length == 0) {
+                panel.allTasksDone();
+            }
         }
+
+        // function taskSucceededActions() {
+        //     player.setPosition(tree.root.x,tree.root.y-BUFFER);
+        //     if(tree.checkCorrectnessRBTree(tree.root)) {     // if RB tree is correct
+        //         panel.greenFeedback();
+        //         singleTon.updateSetRB(tasks[0]);
+        //         if (tasks[0] == 210 && !(singleTon.nodeSetRB.has(node_210))) {
+        //             singleTon.addNodeRB(node_210)
+        //         }
+        //         tasks.shift();
+        //         if (tasks.length == 0) {
+        //             panel.allTasksDone();
+        //         }
+        //     } else {                                         // if RB tree is NOT correct yet
+        //         // panel says that the RB tree needs to be corrected
+        //         panel.refreshTask('Fix the tree!'); 
+        //     }
+        //     tree.setvarToReturnToDefault(); 
+        // }
 
         // *************** CHECK SEARCH + INSERT A NEW NODE ***************
 
@@ -253,9 +266,8 @@ export class InsertLargeTree extends Phaser.Scene {
                         nodeThatPlayerStandsOn.curtain.visible = false;
                         setPhysicsTree(nodeThatPlayerStandsOn, scene)
                         animateInsertion(node, scene)
-                        // player.setPosition(tree.root.x,tree.root.y-BUFFER);
-                        // panel.greenFeedback();
-                        taskSucceededActions();
+                        player.setPosition(tree.root.x,tree.root.y-BUFFER);
+                        panel.greenFeedback();
                         if (tasks[0] == data.task[0]){
                             expert.talk('insertLargeTree',1,'nosymbol');
                         }

@@ -42,6 +42,8 @@ export class NodeBST extends Phaser.GameObjects.Rectangle {
         this.curtain = null;
         this.keyString = null;
         this.link = null;
+
+        this.tweenedPos_event = null;
         
         this.initNode(scene);
 
@@ -286,32 +288,33 @@ export class NodeBST extends Phaser.GameObjects.Rectangle {
             } 
         }
 
-        scene.time.addEvent({
-            delay: 1000,
-            callback: function(scene,node) {
-                // change position of the Rectangle
-                node.setPosition(x,y);
-                // update the Rectangle's physics body position 
-                node.body.updateFromGameObject();
+        this.tweenedPos_event = 
+            scene.time.addEvent({
+                delay: 1000,
+                callback: function(scene,node) {
+                    // change position of the Rectangle
+                    node.setPosition(x,y);
+                    // update the Rectangle's physics body position 
+                    node.body.updateFromGameObject();
 
-                node.curtain.setPosition(x,y);
-                node.curtain.body.updateFromGameObject();
-                // node.curtain.setVisible(true);
+                    node.curtain.setPosition(x,y);
+                    node.curtain.body.updateFromGameObject();
+                    // node.curtain.setVisible(true);
 
-                node.keyString.setPosition(x,y);
-                // Phaser.Display.Align.In.Center(node.keyString, node);
+                    node.keyString.setPosition(x,y);
+                    // Phaser.Display.Align.In.Center(node.keyString, node);
 
-                node.nodeGraphics.setPosition(x,y);
-                node.nullGraphics.setPosition(x,y);
+                    node.nodeGraphics.setPosition(x,y);
+                    node.nullGraphics.setPosition(x,y);
 
-                if (node.isRBnode) {
-                    node.drawLinkToParentRB(scene);
-                } else {
-                    node.drawLinkToParent(scene);
-                }
-            },
-            args: [scene,this]
-        });
+                    if (node.isRBnode) {
+                        node.drawLinkToParentRB(scene);
+                    } else {
+                        node.drawLinkToParent(scene);
+                    }
+                },
+                args: [scene,this]
+            });
     }
 
     calcAngle(z,smth) {
@@ -420,6 +423,10 @@ export class NodeBST extends Phaser.GameObjects.Rectangle {
         this.link = null;
         this.nodeGraphics = null;
         this.nullGraphics = null;
+
+        if(this.tweenedPos_event != null) {
+            this.tweenedPos_event.remove();
+        }
 
         // DESTROY all the physics bodies
         
