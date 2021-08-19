@@ -49,10 +49,23 @@ export class Input extends Phaser.Scene {
         // real scores
         this.scores = [];
 
+
+    function checkForWhiteSpace (str) { 
+        var x = str.split(" ").length - 1;
+
+        if ( str.length > 0 && (str.length - x) == 0 ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
         this.keyEnter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         this.keyEnter.on("down", () => {
             let name = this.nameInput.getChildByName("name");
-            if(name.value != "") {
+            // CheckSpace(name) 
+            if(name.value != "" && checkForWhiteSpace(name.value)) {
                 this.points_text.setVisible(false);
                 this.info_text.setVisible(false);
                 this.nameInput.setVisible(false);
