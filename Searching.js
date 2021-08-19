@@ -230,7 +230,7 @@ export class Searching extends Phaser.Scene {
         function checkSearch(player, node){
             if(node.key == tasks[0]){
                 panel.greenFeedback();
-                node.nodeGraphics.setTint(0xFF0000);
+                node.nodeGraphics.setTint(0xf3a6ff);
 
                 this.time.addEvent({
                     delay: 2000,

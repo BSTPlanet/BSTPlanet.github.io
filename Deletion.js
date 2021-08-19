@@ -689,8 +689,8 @@ export class Deletion extends Phaser.Scene {
                     } else { // both children are NOT null
                         // setting a value of nodeToDelete to use it after user clicks Enter
                         nodeToDelete = node;
-                        nodeToDelete.nodeGraphics.setTint(0xff0090);
-                        if(nodeToDelete.key == 631 && expert.progressCounter == 3) {
+                        nodeToDelete.nodeGraphics.setTint(0xf3a6ff);
+                        if(nodeToDelete.key == 631) {
                             expert.talk('deleteTwoChildren',3,'nosymbol');
                         }
                     }
