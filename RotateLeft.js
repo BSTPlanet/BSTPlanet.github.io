@@ -443,17 +443,15 @@ export class RotateLeft extends Phaser.Scene {
         controls.update(delta); // needed for camera moving and zooming
 
         if (expert.talking) {   // only allow to perform operation when expert is done talking
+            spacebar.reset();
             keyL.enabled = false;
             spacebar.enabled = false;
 
         } else {
+            spacebar.reset();
             keyL.enabled = true;
             spacebar.enabled = true;
 
         }
-    }
-
-
-
-    
+    }   
 }

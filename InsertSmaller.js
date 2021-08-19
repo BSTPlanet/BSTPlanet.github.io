@@ -537,11 +537,13 @@ export class InsertSmaller extends Phaser.Scene {
         controls.update(delta); // needed for camera moving and zooming
 
         if (expert.talking) {   // only allow to perform operation when expert is done talking
+            spacebar.reset();
             keyF.enabled = false;
             keyR.enabled = false;
             keyEnter.enabled = false;
             spacebar.enabled = false;
         } else {
+            spacebar.reset();
             keyF.enabled = true;
             keyR.enabled = true;
             keyEnter.enabled = true;

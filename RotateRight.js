@@ -439,16 +439,15 @@ export class RotateRight extends Phaser.Scene {
     update(time,delta) {
         controls.update(delta); // needed for camera moving and zooming
 
-        if (expert.talking) {   
+        if (expert.talking) {
+            spacebar.reset();
             keyR.enabled = false;
             spacebar.enabled = false;
         } else {
+            spacebar.reset();
             keyR.enabled = true;
             spacebar.enabled = true;
         }
     }
 
-
-
-    
 }

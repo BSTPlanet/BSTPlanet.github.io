@@ -275,14 +275,18 @@ export class FlipColors extends Phaser.Scene {
         controls.update(delta); // needed for camera moving and zooming
 
         if (expert.talking) {   // only allow to perform operation when expert is done talking
+            spacebar.reset();
             keyF.enabled = false;
             spacebar.enabled = false;
         } else {
+            spacebar.reset();
             keyF.enabled = true;
             spacebar.enabled = true;
-
-
         }
     }
 
 }
+
+
+// https://phaser.discourse.group/t/phaser-3-need-double-keyboard-input-for-function/5346
+// Solution when the key needs to be pressed twice after it was disabled and then enabled again
