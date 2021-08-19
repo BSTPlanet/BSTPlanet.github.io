@@ -84,7 +84,7 @@ export class TextsDatabase {
 
         this.rotateRightTexts = ['Let\’s learn how to rotate right! It sounds like it\’s similar to the rotate left, but in reality it differs quite a lot, so don\'t be fooled!',
                                     'The node with the red left link that must be rotated to the right is 400. Notice that the parent of 400 is 800 and the right child of 400 is 512. Press R while standing on 400 to rotate right. ',
-                                    'Great! As you have noticed the old parent (800) of 400 is now the right child of 400. 513 (the old right child of 400) is now a left child of 800. The red left link is now a red right link. Now try rotating by yourself on a different tree!',
+                                    'Great! As you have noticed the old parent (800) of 400 is now the right child of 400. 512 (the old right child of 400) is now a left child of 800. The red left link is now a red right link. Now try rotating by yourself on a different tree!',
                                     'Try to rotate the top red left link.',
                                     'Easy peasy! Now let’s try and use your skills in real-life situations!'];
 
