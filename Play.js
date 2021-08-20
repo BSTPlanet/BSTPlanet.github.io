@@ -46,7 +46,7 @@ export class Play extends Phaser.Scene {
 
         // *************SCENE SPECIFIC CODE*************
 
-        this.add.image(10_000,750,'background_planet_raisin').setDepth(-1);
+        this.background = this.add.image(10_000,750,'background_planet_raisin').setDepth(-1);
 
         var keyEscape = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         keyEscape.on('down', () => {
@@ -205,6 +205,7 @@ export class Play extends Phaser.Scene {
 
         var opNames = ['Insert ', 'Delete '];
 
+        // just creates a root for player to stand on before any levels start
         var tree;
         tree = new Tree('dreamy', this);
         tree.createRoot(this);
@@ -234,7 +235,7 @@ export class Play extends Phaser.Scene {
                     this.gameStarted = true;
                     this.gamePaused = false;
                     // Level 1 - bst
-                    makeTree(this, false, 20, 30);
+                    makeTree(this, false, 20, 30,'dreamy');
                     panel.setLevelName('BST');
                     panel.refreshTask(ops[0] + tasks[0]);
                     panel.setTime(this.time);
@@ -246,7 +247,9 @@ export class Play extends Phaser.Scene {
                     this.keyEnter.enabled = true;
                     this.keybackspace.enabled = true;
                     tree.destroyTree();
-                    makeTree(this,true,0,40);
+                    this.background.destroy();
+                    this.background = this.add.image(10_000,750,'background_planet_venus').setDepth(-1);
+                    makeTree(this,true,0,40,'venus');
                     this.cameras.main.startFollow(player, true, 0.1, 0.1);
                     panel.setLevelName('RB');
                     panel.resetPoints();
@@ -257,7 +260,7 @@ export class Play extends Phaser.Scene {
             }
         });
 
-        function makeTree(scene,isRB,treeSize,taskSize) {
+        function makeTree(scene,isRB,treeSize,taskSize,color) {
             if (tree != null) {
                 tree.destroyTree();
             }
@@ -270,7 +273,7 @@ export class Play extends Phaser.Scene {
             console.log(ops)
             console.log(tasks)
             // tasks = [['Delete ', 'Delete ', 'Insert '],['Min', 'Max', 221]] // the new root had 3 links
-            tree = new Tree('dreamy', scene);
+            tree = new Tree(color, scene);
             // BST (intially an empty/null root node)
             if (isRB) {
                 tree.isRB = isRB;
@@ -563,7 +566,7 @@ export class Play extends Phaser.Scene {
                 
                     } else { // both children are NOT null
                         nodeToDelete = node;
-                        nodeToDelete.nodeGraphics.setTint(0xff0090);
+                        nodeToDelete.nodeGraphics.setTint(0x00fbff);
                     }
                 } else {
                     panel.redFeedback();
