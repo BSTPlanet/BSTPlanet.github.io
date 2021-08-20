@@ -41,18 +41,18 @@ export class TextsDatabase {
                                     'Great! Since it has no children we just delete the node 734 with it’s nulls and put a null instead of 734. Now perform the next task on your own!',            
                                     'You got this! Let’s move on to the deletion of a node with one child.'];
 
-        this.deleteOneChildTexts = ['This is the deletion case when a node has one child! It could be either a left or a right child. In this deletion we have to switch the deleted node with the existing child.',
+        this.deleteOneChildTexts = ['This is the deletion case when a node has one child! It could be either a left or a right child. In this deletion the deleted node is exchanged with the existing child.',
                                     'By the way, those children could also have children, so we would need to move the whole subtree up! Let me show you! Your task is to delete 76. Try to find it first!',            
                                     'You found it! Notice that it has the right child. And there’s many more nodes beyond it! This whole subtree will have to move up. Now delete 76 by pressing Backspace.',            
                                     'Great! Node 76 was replaced by 373 and all the subtree nodes moved up as well! Now perform the next task on your own!',
                                     'You’re doing great! Let’s look at the last deletion case - when a node has two children!'];
 
-        this.deleteTwoChildrenTexts = ['This is the deletion case when a node has two children! Now there will be more work to be done. In this case you will have to switch the deleted node with another node. That another node is going to be the deleted node’s right subtree’s min node! Wow! Let’s break this down!',
+        this.deleteTwoChildrenTexts = ['This is the deletion case when a node has two children! Now there will be more work to be done. In this case the node we will delete will have to be exchanged with another node. That another node is going to be the deleted node’s right subtree’s min node! Wow! Let’s break this down!',
                                         'Your task is to delete 631. Try to find it! ',            
                                         'You found it! Let’s mark it as the node we want to delete by pressing Backspace.',            
-                                        'Now onto the search for the other node! When we find it, we will switch it with the deleted node. We will look for the other node in the right subtree of the deleted node. Go to the right child!',             
+                                        'Now onto the search for the other node! When we find it, we will select it so it can be exchanged with the deleted node. We will look for the other node in the right subtree of the deleted node. Go to the right child!',             
                                         'Alrighty, that is 791! Now all you have to do is to find the min node of this subtree! It’s similar to what you have done in delete min operation - just go left until you reach a node with a null on the left.',            
-                                        'You found it! It’s the node 717! Select it as min by pressing M key. This will initiate the deletion and switching process.',             
+                                        'You found it! It’s the node 717! Select it as min by pressing M key. This will initiate the deletion and exchanging process.',             
                                         'Great! The node 631 was deleted and 717 was placed there instead. Since the node 717 had a right child, a delete node with one child operation was performed - the right child switched places with the node 717. Now perform the next task on your own!',            
                                         'That was tough, but you did great!'];
 

@@ -11,7 +11,7 @@ export class HelpBubble extends Phaser.Scene {
 
         // create help bubble at the corner of the screen
         this.help_bubble = this.add.image(1545,860,'help_bubble').setScale(0.5);
-        this.help_bubble_selector = this.add.image(1545-4,860-4,'help_bubble_selector').setScale(0.5);
+        this.help_bubble_selector = this.add.image(1545-4,860-4,'help_bubble_selector').setScale(0.5).setVisible(false);
 
         // create container of the popup
         this.popup_container;
@@ -30,7 +30,7 @@ export class HelpBubble extends Phaser.Scene {
         // this.explainButtons = this.add.text(470,500, 'ENTER\nARROWS\nESC\nBACKSPACE\nP\nSPACEBAR', { fontFamily: 'nasalization-rg', fontSize: '30px', fill: '#ffffff', align: 'justify', wordWrap: { width: 760, useAdvancedWrap: true }});
 
         // '?' (question mark) key logic
-        this.switcharoo = 1;
+        this.switcharoo = 0;
         // use this key also in game mode
         this.keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
         this.keyH.on('down', () => {
@@ -73,7 +73,7 @@ export class HelpBubble extends Phaser.Scene {
             case 'learn':
                 // init container stuff
                 this.keyboardImg = this.add.image(-275,-375, 'keyboard');
-                this.keyboardText = this.add.text(70,-500, 'Q and E to zoom out/in.\nHold W, A, S, D keys to move camera.\nARROW KEYS to walk through the tree.\nENTER to insert node.\nBACKSPACE to delete node.\nM to select min node for deletion.\nL, R, F to perform RB operations.\nSPACEBAR to go to the next level.\nESC to go back to menu.', { fontFamily: 'nasalization-rg', fontSize: '23px', fill: '#ffffff', align: 'justify', wordWrap: { width: 500, useAdvancedWrap: true }});
+                this.keyboardText = this.add.text(70,-500, 'Q and E to zoom out/in.\nHold W, A, S, D keys to move camera.\nARROW KEYS to walk through the tree.\nENTER to select or insert node.\nBACKSPACE to delete node.\nM to select min node for deletion.\nL, R, F to perform RB operations.\nSPACEBAR to go to the next level.\nESC to go back to menu.', { fontFamily: 'nasalization-rg', fontSize: '23px', fill: '#ffffff', align: 'justify', wordWrap: { width: 500, useAdvancedWrap: true }});
                 var text = 'In BST you will learn about Binary Search Trees. Complete the BST levels to find Alf’s wrench!\n\n\nIn RB-BST you will learn about Left-Leaning Red-Black Binary Search Trees. Complete the RB-BST levels to find Alf’s screwdriver!\n\n\nBST and RB-BST are split into 9 levels. There are two tasks per each level (except About levels). You will collect a node for completing each level. The reward level will be unlocked when you finish all of the levels and collect all of the nodes.\n\n\n\n\nIn the reward level you will have to insert all of the nodes correctly and you will find a tool!';
                 this.explanation = this.add.text(-580,-190, text, { fontFamily: 'nasalization-rg', fontSize: '25px', fill: '#ffffff', align: 'justify', wordWrap: { width: 900, useAdvancedWrap: true }});
                 this.img = this.add.image(470,-5, 'help_image_learn').setScale(1.5);
@@ -178,6 +178,6 @@ export class HelpBubble extends Phaser.Scene {
     
     setupContainer() {
         var container_children = [this.window,this.explanation,this.keyboardText,this.keyboardImg,this.img,this.keyH_img];  //,this.closeText
-        this.popup_container = this.add.container(800,600,container_children);
+        this.popup_container = this.add.container(800,600,container_children).setVisible(false);
     }
 }

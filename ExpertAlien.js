@@ -159,16 +159,25 @@ export class ExpertAlien extends Phaser.Scene {
         this.typewriteText(wrappedText);
     }
 
+    // prints two letters at a time - to increase the speed of typewriter even more
+    // had to keep delay property because otherwise the getOverallProgress() was giving NaNs
     typewriteText(text) {
         this.talking = true;
         const length = text.length;
+        const repeat = length/2;
         let i = 0;
         this.typer = 
             this.time.addEvent({
                 callback: () => {
-                    this.text_small.text += text[i];
-                    ++i;
-                    if (this.typer.getOverallProgress() == 1) {
+                    if(i < length) {
+                        this.text_small.text += text[i];
+                        ++i;
+                    }
+                    if(i < length) {
+                        this.text_small.text += text[i];
+                        ++i;
+                    }
+                    if (this.typer.getOverallProgress() >= 1) {
                         this.progressCounter = this.progressCounter + 1;
                         this.talking = false;
                         if(this.type == 'close') {
@@ -176,7 +185,7 @@ export class ExpertAlien extends Phaser.Scene {
                         }
                     }
                 },
-                repeat: length - 1,
+                repeat: repeat,
                 delay: 3,          // TYPEWRITER SPEED - the smaller,the faster
             });
     }
