@@ -17,20 +17,20 @@ export class Panel extends Phaser.Scene {
         this.panel = this.add.image(815, 840, 'panel').setDepth(-1);
 
         // levels
-        this.levelHeader = this.add.text(230,795, 'LEVEL:', { fontFamily: 'nasalization-rg', fontSize: '21px', fill: '#ffffff' });
-        this.levelName = this.add.text(320,795, '', { fontFamily: 'nasalization-rg', fontSize: '21px', fill: '#ffffff' });
+        this.levelHeader = this.add.text(230,795, 'LEVEL:', { fontFamily: 'audiowide', fontSize: '21px', fill: '#ffffff' });
+        this.levelName = this.add.text(320,795, '', { fontFamily: 'audiowide', fontSize: '21px', fill: '#ffffff' });
 
         // tasks
         // this.task_nextlevel = 'Press SPACEBAR to go to the next level';
-        this.spacebar_img = this.add.image(550,855,'spacebar_continue').setVisible(false);
+        this.spacebar_img = this.add.image(560,855,'spacebar_continue').setVisible(false);
         this.task_done = 'You are done!';
         this.taskHeader_text = 'TASK:';
-        this.taskHeader = this.add.text(230,840, this.taskHeader_text, { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#ffffff' });
-        this.task = this.add.text(320,837, '', { fontFamily: 'nasalization-rg', fontSize: '32px', fill: '#ffff00' });
+        this.taskHeader = this.add.text(230,840, this.taskHeader_text, { fontFamily: 'audiowide', fontSize: '28px', fill: '#ffffff' });
+        this.task = this.add.text(330,837, '', { fontFamily: 'audiowide', fontSize: '32px', fill: '#ffff00' });
 
         // feedback
         this.feedback_default = 'Waiting for action...';
-        this.feedback = this.add.text(915,842, this.feedback_default, { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#d1d1d1' });
+        this.feedback = this.add.text(915,842, this.feedback_default, { fontFamily: 'audiowide', fontSize: '28px', fill: '#d1d1d1' });
         this.feedbackTween = null;
 
         // Reward Tools
@@ -60,7 +60,7 @@ export class Panel extends Phaser.Scene {
         this.taskHeader.setText(this.taskHeader_text);
         this.spacebar_img.setVisible(false);
         this.taskHeader.setVisible(true);
-        this.task.setPosition(320,837);
+        this.task.setPosition(330,837);
         this.task.setText(newTask);
         this.task.setFontSize('32px');
         // this tween does a shaky-shake on the task text

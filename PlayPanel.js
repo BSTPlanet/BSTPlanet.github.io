@@ -17,18 +17,18 @@ export class PlayPanel extends Phaser.Scene {
         this.panel = this.add.image(815, 840, 'panel_sandbox').setDepth(-1);
 
         // levels
-        this.levelHeader = this.add.text(240,798, 'LEVEL:', { fontFamily: 'nasalization-rg', fontSize: '21px', fill: '#ffffff' });
-        this.levelName = this.add.text(330,798, '', { fontFamily: 'nasalization-rg', fontSize: '21px', fill: '#ffffff' });
+        this.levelHeader = this.add.text(240,798, 'LEVEL:', { fontFamily: 'audiowide', fontSize: '21px', fill: '#ffffff' });
+        this.levelName = this.add.text(330,798, '', { fontFamily: 'audiowide', fontSize: '21px', fill: '#ffffff' });
 
         // tasks
         // this.task_nextlevel = 'Press SPACEBAR to go to the next level';
         this.tasks_done = 'No more tasks!';
-        this.taskHeader = this.add.text(240,843, 'TASK:', { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#ffffff' });
-        this.task = this.add.text(330,840, '', { fontFamily: 'nasalization-rg', fontSize: '32px', fill: '#ffff00' });
+        this.taskHeader = this.add.text(240,843, 'TASK:', { fontFamily: 'audiowide', fontSize: '28px', fill: '#ffffff' });
+        this.task = this.add.text(340,840, '', { fontFamily: 'audiowide', fontSize: '32px', fill: '#ffff00' });
 
         // feedback
         this.feedback_default = 'Waiting for action...';
-        this.feedback = this.add.text(745,820, this.feedback_default, { fontFamily: 'nasalization-rg', fontSize: '28px', fill: '#d1d1d1' });
+        this.feedback = this.add.text(745,820, this.feedback_default, { fontFamily: 'audiowide', fontSize: '28px', fill: '#d1d1d1' });
         this.feedbackTween = null;
 
         // Reward popups
@@ -38,7 +38,7 @@ export class PlayPanel extends Phaser.Scene {
         // Diamonds/points
         this.diamond = this.add.image(1300,833,'diamond');
         this.points = 0;
-        this.points_text = this.add.text(1325,815,'0'+this.points,{ fontFamily: 'nasalization-rg', fontSize: '34px', fill: '#BAE4F6' });
+        this.points_text = this.add.text(1325,810,'0'+this.points,{ fontFamily: 'audiowide', fontSize: '34px', fill: '#BAE4F6' });
         this.points_text.setOrigin(0,0);
         this.total_points = 0;
 
@@ -48,10 +48,10 @@ export class PlayPanel extends Phaser.Scene {
         this.time = this.time_default;
         this.minutes = Math.floor(this.time / 60);
         this.seconds = this.time % 60;
-        this.time_text = this.add.text(1140,815,'0'+this.minutes + ':0' + this.seconds,{ fontFamily: 'nasalization-rg', fontSize: '34px', fill: '#ffffff', align: 'center' });
+        this.time_text = this.add.text(1130,810,'0'+this.minutes + ':0' + this.seconds,{ fontFamily: 'audiowide', fontSize: '34px', fill: '#ffffff', align: 'center' });
 
         // spacebar key symbol
-        this.spacebar_img = this.add.image(530, 835, 'spacebar_continue').setVisible(false);
+        this.spacebar_img = this.add.image(540, 835, 'spacebar_continue').setVisible(false);
         this.spacebar_tween = 
             this.add.tween({
                 targets: this.spacebar_img,
@@ -177,7 +177,7 @@ export class PlayPanel extends Phaser.Scene {
         this.spacebar_img.setVisible(false);
         // this.spacebar_tween.pause();
         this.taskHeader.setVisible(true);
-        this.task.setPosition(330,840);
+        this.task.setPosition(340,840);
         this.task.setText(newTask);
         this.task.setFontSize('32px');
         // this tween does a shaky-shake on the task text
@@ -214,7 +214,7 @@ export class PlayPanel extends Phaser.Scene {
         this.feedback.setAlpha(100);
         this.feedback.setFontSize('45px');
         this.feedback.setText('GOOD JOB!').setFill('#33FF38');
-        this.feedback.setPosition(755,810);
+        this.feedback.setPosition(745,810);
         // this tween does a shaky-shake on the feedback text
         this.add.tween({
             targets: this.feedback,
@@ -242,7 +242,7 @@ export class PlayPanel extends Phaser.Scene {
         this.feedback.setAlpha(100);
         this.feedback.setFontSize('45px');
         this.feedback.setText('TRY AGAIN').setFill('#FF99C3');
-        this.feedback.setPosition(755,810);
+        this.feedback.setPosition(745,810);
         // this tween does a shaky-shake on the feedback text
         this.add.tween({
             targets: this.feedback,

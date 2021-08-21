@@ -14,7 +14,7 @@ export class StoryBegin extends Phaser.Scene {
 
         // ***** Progress bar graphics *****
 
-        var loadingText = this.add.text(680,300, 'Loading...', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff'});
+        var loadingText = this.add.text(680,300, 'Loading...', { fontFamily: 'audiowide', fontSize: '40px', fill: '#ffffff'});
         var progressBar = this.add.graphics().setDepth(4);
         var progressBox = this.add.graphics();
         progressBox.fillStyle(0x277ea3, 0.8);
@@ -225,7 +225,7 @@ export class StoryBegin extends Phaser.Scene {
         });
 
         this.progressCounter = 0;
-        this.story = this.add.text(200,100, '', { fontFamily: 'nasalization-rg', fontSize: '32px', fill: '#ffffff', align: 'justify', wordWrap: { width: 1200, useAdvancedWrap: true }, lineSpacing: 30 });
+        this.story = this.add.text(200,100, '', { fontFamily: 'audiowide', fontSize: '32px', fill: '#ffffff', align: 'justify', wordWrap: { width: 1200, useAdvancedWrap: true }, lineSpacing: 30 });
         this.spacebar_img = this.add.image(800,840,'spacebar_continue').setScale(1.2).setDepth(2);
         this.tween_spacebar = 
             this.add.tween({
@@ -238,15 +238,15 @@ export class StoryBegin extends Phaser.Scene {
             });
 
         this.enter_img = this.add.image(1550,870,'key_enter').setScale(0.7).setDepth(2);
-        this.skipText = this.add.text(1430,845, 'skip\nthe story', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#7b9de0', align: 'right' }).setDepth(2);
+        this.skipText = this.add.text(1420,845, 'skip\nthe story', { fontFamily: 'audiowide', fontSize: '20px', fill: '#7b9de0', align: 'right' }).setDepth(2);
 
 
-        // this.continueText = this.add.text(1250,830, 'Press SPACEBAR to continue...', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#ffffff' });
-        // this.skipText = this.add.text(1250,860, 'Press ENTER to skip the story', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#ffffff' });
+        // this.continueText = this.add.text(1250,830, 'Press SPACEBAR to continue...', { fontFamily: 'audiowide', fontSize: '20px', fill: '#ffffff' });
+        // this.skipText = this.add.text(1250,860, 'Press ENTER to skip the story', { fontFamily: 'audiowide', fontSize: '20px', fill: '#ffffff' });
 
         this.dialoguePic = this.add.image(790,800,'dialogue_planet').setVisible(false);  // alien_dialogue
-        this.exeroText = this.add.text(1130,380, '', { fontFamily: 'nasalization-rg', fontSize: '30px', fill: '#d4fffd', wordWrap: { width: 450, useAdvancedWrap: true }, lineSpacing: 20 });
-        this.alfText = this.add.text(120,300, '', { fontFamily: 'nasalization-rg', fontSize: '30px', fill: '#ffd4ed', wordWrap: { width: 500, useAdvancedWrap: true }, lineSpacing: 20 });
+        this.exeroText = this.add.text(1130,380, '', { fontFamily: 'audiowide', fontSize: '30px', fill: '#d4fffd', wordWrap: { width: 450, useAdvancedWrap: true }, lineSpacing: 20 });
+        this.alfText = this.add.text(120,300, '', { fontFamily: 'audiowide', fontSize: '30px', fill: '#ffd4ed', wordWrap: { width: 500, useAdvancedWrap: true }, lineSpacing: 20 });
 
 
         var spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -265,7 +265,7 @@ export class StoryBegin extends Phaser.Scene {
                 } else if (this.progressCounter == 2) {     // display Alf's line 
                     this.typewriteTextWrapped(this.alfText,dialogue[1]);
                 } else if (this.progressCounter == 3) {     // display Exero's line 2
-                    this.exeroText.setPosition(1134,80);
+                    this.exeroText.setPosition(1134,70);
                     this.typewriteTextWrapped(this.exeroText,dialogue[2]);
                 } else if (this.progressCounter == 4) {     // move to TitlePage
                     this.dialoguePic.setVisible(false);

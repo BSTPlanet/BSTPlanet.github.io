@@ -691,7 +691,7 @@ export class Deletion extends Phaser.Scene {
                         nodeToDelete = node;
                         nodeToDelete.nodeGraphics.setTint(0xf3a6ff);
                         if(nodeToDelete.key == 631) {
-                            if(expert.progressCounter <= 2){
+                            if (expert.progressCounter <= 2) {
                                 talkNodes.shift();
                             }
                             expert.progressCounter = 3;

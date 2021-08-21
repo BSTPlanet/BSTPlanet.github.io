@@ -27,8 +27,8 @@ export class ExpertAlien extends Phaser.Scene {
         this.talkBubble_close.setVisible(false);
 
         // Texts:
-        // this.text_small = this.add.text(62,520, '', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#ffffff', align: 'justify', wordWrap: { width: 400, useAdvancedWrap: true } }).setVisible(false);
-        this.text_small = this.add.text(62,430, '', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#ffffff', align: 'justify', wordWrap: { width: 400, useAdvancedWrap: true } }).setVisible(false);
+        // this.text_small = this.add.text(62,520, '', { fontFamily: 'audiowide', fontSize: '20px', fill: '#ffffff', align: 'justify', wordWrap: { width: 400, useAdvancedWrap: true } }).setVisible(false);
+        this.text_small = this.add.text(62,430, '', { fontFamily: 'audiowide', fontSize: '20px', fill: '#ffffff', align: 'justify', wordWrap: { width: 400, useAdvancedWrap: true } }).setVisible(false);
 
         this.speechTween = null;
 

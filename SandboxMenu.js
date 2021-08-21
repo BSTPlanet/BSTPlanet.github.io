@@ -21,7 +21,7 @@ export class SandboxMenu extends Phaser.Scene {
 
     create() {
 
-        this.add.text(80,50, 'PRACTICE', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#c799e0' });
+        this.add.text(80,50, 'PRACTICE', { fontFamily: 'audiowide', fontSize: '38px', fill: '#c799e0' });
 
         this.scene.remove('HelpBubble');
         this.helpBubble_key = 'HelpBubble_sandbox';

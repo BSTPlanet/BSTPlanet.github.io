@@ -23,7 +23,7 @@ export class LearnPage extends Phaser.Scene {
 
     create() {
 
-        this.add.text(80,50, 'LEARN', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#72d678' });
+        this.add.text(80,50, 'LEARN', { fontFamily: 'audiowide', fontSize: '38px', fill: '#72d678' });
 
         // this.scene.remove('HelpBubble');
         this.helpBubble_key = 'HelpBubble_learn';

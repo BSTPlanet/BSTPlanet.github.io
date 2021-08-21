@@ -59,7 +59,7 @@ export class TitlePage extends Phaser.Scene {
 
         // sandbox button with physics enabled
         var sandboxButton = this.add.image(800,480,'button_practice');   // change graphics - TODO
-        // this.add.text(800-60,480-20, 'SANDBOX / TRAIN(ING)', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#ffffff' });
+        // this.add.text(800-60,480-20, 'SANDBOX / TRAIN(ING)', { fontFamily: 'audiowide', fontSize: '38px', fill: '#ffffff' });
         sandboxButton.setName("practice");
         buttons.push(sandboxButton);
 
@@ -70,7 +70,7 @@ export class TitlePage extends Phaser.Scene {
         
         // leaderboard button with physics enabled
         var leaderboardButton = this.add.image(800,760,'button_leaderboard');  // change graphics - TODO
-        // this.add.text(800-60,760-20, 'LEADERBOARD', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#ffffff' });
+        // this.add.text(800-60,760-20, 'LEADERBOARD', { fontFamily: 'audiowide', fontSize: '38px', fill: '#ffffff' });
         leaderboardButton.setName("leaderboard");
         buttons.push(leaderboardButton);
 
@@ -116,8 +116,8 @@ export class TitlePage extends Phaser.Scene {
     //             posX = 850;
     //             posY = 140;
     //         }
-    //         var name = this.add.text(posX,posY, position + ". " + item[0], { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
-    //         var points = this.add.text(posX+bufferX,posY, item[1], { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
+    //         var name = this.add.text(posX,posY, position + ". " + item[0], { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
+    //         var points = this.add.text(posX+bufferX,posY, item[1], { fontFamily: 'audiowide', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
     //         var diamond = this.add.image(posX+bufferX-34,posY+20, 'diamond').setDepth(6);
     //         this.text_objects.push(name);
     //         this.text_objects.push(points);
@@ -144,8 +144,8 @@ export class TitlePage extends Phaser.Scene {
                     posX = 850;
                     posY = 140;
                 }
-                var name = this.add.text(posX,posY, position + ". " + doc.data().Name, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
-                var points = this.add.text(posX+bufferX,posY, doc.data().Points, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
+                var name = this.add.text(posX,posY, position + ". " + doc.data().Name, { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
+                var points = this.add.text(posX+bufferX,posY, doc.data().Points, { fontFamily: 'audiowide', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
                 var diamond = this.add.image(posX+bufferX-34,posY+20, 'diamond').setDepth(6);
                 this.text_objects.push(name);
                 this.text_objects.push(points);

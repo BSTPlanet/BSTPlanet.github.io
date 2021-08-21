@@ -27,8 +27,8 @@ export class Input extends Phaser.Scene {
         this.nameInput = this.add.dom(800, 460).createFromCache("form");
 
         // *************DISPLAY TOTAL POINTS AND OTHER INFO*************
-        this.points_text = this.add.text(630,230, 'Total points: ' + this.totalpoints, { fontFamily: 'nasalization-rg', fontSize: '45px', fill: '#ffffff' });
-        this.info_text = this.add.text(370,340, 'Enter your name and see the leaderboard!', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff' });
+        this.points_text = this.add.text(630,230, 'Total points: ' + this.totalpoints, { fontFamily: 'audiowide', fontSize: '45px', fill: '#ffffff' });
+        this.info_text = this.add.text(370,340, 'Enter your name and see the leaderboard!', { fontFamily: 'audiowide', fontSize: '40px', fill: '#ffffff' });
 
         // *************ALF FLIES AWAY*************
         this.alf_fly = this.add.image(1500,900,'alf_takeoff');
@@ -122,8 +122,8 @@ export class Input extends Phaser.Scene {
                     posX = 850;
                     posY = 100;
                 }
-                var name = this.add.text(posX,posY, position + ". " + doc.data().Name, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
-                var points = this.add.text(posX+bufferX,posY, doc.data().Points, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
+                var name = this.add.text(posX,posY, position + ". " + doc.data().Name, { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
+                var points = this.add.text(posX+bufferX,posY, doc.data().Points, { fontFamily: 'audiowide', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
                 var diamond = this.add.image(posX+bufferX-34,posY+20, 'diamond').setDepth(6);
                 if(doc.data().Name == username) {
                     name.setFill('#ffff00');
@@ -143,8 +143,8 @@ export class Input extends Phaser.Scene {
         //         posX = 850;
         //         posY = 100;
         //     }
-        //     var name = this.add.text(posX,posY, position + ". " + item[0], { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
-        //     var points = this.add.text(posX+bufferX,posY, item[1], { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
+        //     var name = this.add.text(posX,posY, position + ". " + item[0], { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffffff'}).setDepth(6);
+        //     var points = this.add.text(posX+bufferX,posY, item[1], { fontFamily: 'audiowide', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
         //     var diamond = this.add.image(posX+bufferX-34,posY+20, 'diamond').setDepth(6);
         //     if(item[0] == username) {
         //         name.setFill('#ffff00');
@@ -174,16 +174,16 @@ export class Input extends Phaser.Scene {
         // // var user_position = find in db;
         // if(player_pos > 20) { // or 19?
         //                                             // position + ". " + username
-        //     var user_name = this.add.text(550,760, player_pos + username, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
-        //     var points = this.add.text(550+bufferX,760, this.totalpoints, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
+        //     var user_name = this.add.text(550,760, player_pos + username, { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
+        //     var points = this.add.text(550+bufferX,760, this.totalpoints, { fontFamily: 'audiowide', fontSize: '33px', fill: '#BAE4F6'}).setDepth(6);
         //     var diamond = this.add.image(550+bufferX-34,760+20, 'diamond').setDepth(6);
         //     this.leaderboard_text_objects.push(user_name);
         //     this.leaderboard_text_objects.push(points);
         //     this.leaderboard_text_objects.push(diamond);
         // }
 
-        var user_name = this.add.text(550,760, "Your score", { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
-        var points = this.add.text(550+bufferX,760, this.totalpoints, { fontFamily: 'nasalization-rg', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
+        var user_name = this.add.text(550,760, "Your score", { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
+        var points = this.add.text(550+bufferX,760, this.totalpoints, { fontFamily: 'audiowide', fontSize: '33px', fill: '#ffff00'}).setDepth(6);
         var diamond = this.add.image(550+bufferX-34,760+20, 'diamond').setDepth(6);
         this.leaderboard_text_objects.push(user_name);
         this.leaderboard_text_objects.push(points);

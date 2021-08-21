@@ -133,7 +133,7 @@ export class NodeBST extends Phaser.GameObjects.Rectangle {
         this.nodeGraphics = scene.add.image(this.posX, this.posY, this.nodeC).setDepth(0);
         this.curtain = scene.add.image(this.posX, this.posY, this.curtainC).setDepth(2);
         this.nullGraphics = scene.add.image(this.posX, this.posY, 'node_null').setDepth(0);
-        this.keyString = scene.add.text(this.posX, this.posY, 'null', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: this.textNullC }).setDepth(1);
+        this.keyString = scene.add.text(this.posX, this.posY, 'null', { fontFamily: 'audiowide', fontSize: '20px', fill: this.textNullC }).setDepth(1);
         this.keyString.setOrigin(0.5);
 
         this.nodeGraphics.setVisible(false);
@@ -149,7 +149,7 @@ export class NodeBST extends Phaser.GameObjects.Rectangle {
         // 0xbd96d4
         // this.curtain.setDepth(2);
 
-        // this.keyString = scene.add.text(this.posX, this.posY, 'null', { fontFamily: 'nasalization-rg', fontSize: '20px', fill: '#5e5e5e' });
+        // this.keyString = scene.add.text(this.posX, this.posY, 'null', { fontFamily: 'audiowide', fontSize: '20px', fill: '#5e5e5e' });
         // this.keyString.setDepth(1);
         // Phaser.Display.Align.In.Center(this.keyString, this);
         // scene.add.image(this.posX, this.posY, 'node_yellow').setScale(1.5).setDepth(0);

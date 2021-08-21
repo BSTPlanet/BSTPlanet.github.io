@@ -132,7 +132,7 @@ export class SandboxRB extends Phaser.Scene {
         // var tasks = [527,786,862]
 
         // too expanded tree
-        // var numsToInsert = [531,392,751,498,247,788,715,320,257];
+        // var numsToInsert = [531,392,751,498,247,788,715,320,257,690,851,253,841,93,749,148];
 
         var numsToInsert = generateNumsToInsert(Math.floor(Math.random() * 10));
         var tasks = generateNumsForInsertTask(10);

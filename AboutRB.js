@@ -328,7 +328,7 @@ export class AboutRB extends Phaser.Scene {
                 if(node.key == path[index]) {
                     if (node.left != null && node.right != null) {
                         if (node.left.key == path[index+1]) {
-                            var bb_text = scene.add.text(node.left.link.x,node.left.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff' });
+                            var bb_text = scene.add.text(node.left.link.x,node.left.link.y - 150,'', { fontFamily: 'audiowide', fontSize: '40px', fill: '#ffffff' });
                             var RB_tween = scene.tweens.add({
                                 targets: node.left.link,
                                 delay: delay,
@@ -343,7 +343,7 @@ export class AboutRB extends Phaser.Scene {
                                 onCompleteParams: [bb_text]
                             });
                         } else if (node.right.key == path[index+1]) {
-                            var bb_text = scene.add.text(node.right.link.x,node.right.link.y - 150,'', { fontFamily: 'nasalization-rg', fontSize: '40px', fill: '#ffffff' });
+                            var bb_text = scene.add.text(node.right.link.x,node.right.link.y - 150,'', { fontFamily: 'audiowide', fontSize: '40px', fill: '#ffffff' });
                             var RB_tween =  scene.tweens.add({
                                 targets: node.right.link,
                                 delay: delay,

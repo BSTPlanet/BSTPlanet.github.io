@@ -36,7 +36,7 @@ export class MenuBST extends Phaser.Scene {
 
     create() {
 
-        this.add.text(80,50, 'LEARN BST', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#9787cc' });
+        this.add.text(80,50, 'LEARN BST', { fontFamily: 'audiowide', fontSize: '38px', fill: '#9787cc' });
 
         // background
         this.add.image(800,456,'background_space_purple').setDepth(-1);

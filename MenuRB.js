@@ -34,7 +34,7 @@ export class MenuRB extends Phaser.Scene {
 
     create() {
 
-        this.add.text(80,50, 'LEARN RB', { fontFamily: 'nasalization-rg', fontSize: '38px', fill: '#bf746b' });
+        this.add.text(80,50, 'LEARN RB', { fontFamily: 'audiowide', fontSize: '38px', fill: '#bf746b' });
 
         // background
         this.add.image(800,456,'background_space_red').setDepth(-1);
