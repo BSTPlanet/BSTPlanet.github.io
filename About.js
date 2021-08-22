@@ -57,6 +57,7 @@ export class About extends Phaser.Scene {
             destroyEverything();
             this.scene.stop('Panel');
             this.scene.stop('ExpertAlien');
+            this.scene.stop('HelpBubble_keyboard');
             this.scene.stop();
             this.scene.wake('MenuBST')
             this.input.keyboard.removeAllKeys(true);
