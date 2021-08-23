@@ -25,6 +25,7 @@ export class Input extends Phaser.Scene {
         // *************ADD THE HTML INPUT FORM*************
         // add the input form that asks user to type their name
         this.nameInput = this.add.dom(800, 460).createFromCache("form");
+        this.enter_key = this.add.image(1070,460,'key_enter');
 
         // *************DISPLAY TOTAL POINTS AND OTHER INFO*************
         this.points_text = this.add.text(630,230, 'Total points: ' + this.totalpoints, { fontFamily: 'audiowide', fontSize: '45px', fill: '#ffffff' });
