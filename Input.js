@@ -69,7 +69,8 @@ export class Input extends Phaser.Scene {
             if(name.value != "" && checkForWhiteSpace(name.value)) {
                 this.points_text.setVisible(false);
                 this.info_text.setVisible(false);
-                this.nameInput.setVisible(false);
+                this.nameInput.destroy();
+                this.enter_key.setVisible(false);
 
                 // if the username is already taken - display warning
                 // else add to db and display leaderboard
